@@ -4,11 +4,11 @@ using UnityEngine;
 public class ControladorPato : MonoBehaviour
 {
     [Header("Velocidad avanzar")]
-    private float velocidad = 5f;
+    public float velocidad = 5f;
     private Rigidbody rb;
 
     [Header("Salto")]
-    private float FuerzaSalto = 5f;
+    public float FuerzaSalto = 5f;
     private int MaxSaltos = 3;
     public int saltoActual = 0;
 

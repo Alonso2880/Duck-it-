@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class CamaraFollow : MonoBehaviour
@@ -12,10 +13,7 @@ public class CamaraFollow : MonoBehaviour
         if (target == null)
             return;
 
-        transform.position = new Vector3(
-            target.position.x + offset.x,
-            offset.y,
-            target.position.z + offset.z
-        );
+        transform.position = target.position + offset;
     }
 }
+

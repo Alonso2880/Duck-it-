@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class DistanciaMonedas : MonoBehaviour
@@ -5,14 +6,20 @@ public class DistanciaMonedas : MonoBehaviour
     [Header("Metricas")]
     public int monedas;
     public float distancia;
-    void Start()
+
+    [Header("Referencias")]
+    [SerializeField] private TMP_Text textoMonedas;
+    [SerializeField] private TMP_Text textoDistancia;
+
+    public void ActualizarMonedas()
     {
-        
+        if (textoMonedas != null)
+            textoMonedas.text = "Coins: " + monedas;
     }
 
-
-    void Update()
+    public void ActualizarDistancia()
     {
-        
+        if (textoDistancia != null)
+            textoDistancia.text = distancia.ToString("F1") + " m";
     }
 }
