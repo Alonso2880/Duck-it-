@@ -2,16 +2,14 @@ using UnityEngine;
 
 public class Muerte : MonoBehaviour
 {
-    [Header("Spawn")]
-    public GameObject Spawn;
+    [Header("Canvas")]
+    public GameObject canvasMuerte;
 
-    [Header("Distancia & Monedas")]
-    public GameObject DM;
+
     public void Death()
     {
-        transform.position = Spawn.transform.position;
+        Time.timeScale = 0f;
+        canvasMuerte.SetActive(true);
 
-        Detectar detectar = GetComponent<Detectar>();
-        detectar.ResetearDistancia();
     }
 }
