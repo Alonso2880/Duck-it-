@@ -15,10 +15,17 @@ public class ControladorPato : MonoBehaviour
     [Header("Suelo")]
     public float radioSuelo = 1f;
     public LayerMask layerSuelo;
+
+    [Header("Detección de atasco")]
+    public float tiempoMaximoAtascado = 1f;
+    private float tiempoSinAvanzar = 0f;
+    private float ultimaPosicionX;
+
     public bool IsGrounded { get; private set; }
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        ultimaPosicionX = transform.position.x;
     }
 
     void Update()
@@ -34,6 +41,11 @@ public class ControladorPato : MonoBehaviour
             Salto();
         }
 
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            Salto();
+        }
+
         //Detectar el suelo
         IsGrounded = Physics.Raycast(transform.position, Vector3.down, radioSuelo, layerSuelo);
    
@@ -41,6 +53,30 @@ public class ControladorPato : MonoBehaviour
         {
             saltoActual = 0;
         }
+    }
+
+    void FixedUpdate()
+    {
+        Muerte muerte = GetComponent<Muerte>();
+        float avance = transform.position.x - ultimaPosicionX;
+
+        if (avance < 0.01f)
+        {
+            tiempoSinAvanzar += Time.fixedDeltaTime;
+
+            if (tiempoSinAvanzar >= tiempoMaximoAtascado)
+            {
+                tiempoSinAvanzar = 0f;
+                ultimaPosicionX = transform.position.x;
+                muerte.Death();
+            }
+        }
+        else
+        {
+            tiempoSinAvanzar = 0f;
+        }
+
+        ultimaPosicionX = transform.position.x;
     }
 
     public void Salto()

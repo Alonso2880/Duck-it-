@@ -6,11 +6,14 @@ public class CanvasMuerte : MonoBehaviour
     [Header("Spawn")]
     public GameObject Spawn;
 
-    [Header("Distancia & Monedas")]
+    [Header("Referencias")]
     public GameObject DM;
+    public MapaInfinito mapin;
+    public GameObject pato;
 
-    [Header("CanvasInicio")]
+    [Header("Canvas")]
     public GameObject CanvIn;
+    public GameObject CanvMuerte;
 
     [Header("Textos")]
     [SerializeField] private TMP_Text textoMonedas;
@@ -19,19 +22,24 @@ public class CanvasMuerte : MonoBehaviour
     {
         Time.timeScale = 1f;
 
-        transform.position = Spawn.transform.position;
+        pato.transform.position = Spawn.transform.position;
 
-        Detectar detectar = GetComponent<Detectar>();
+        Detectar detectar = pato.GetComponent<Detectar>();
+        ControladorPato cont = pato.GetComponent<ControladorPato>();
+
         detectar.ResetearDistancia();
-        this.gameObject.SetActive(false); //Apago el canvas
+        CanvMuerte.gameObject.SetActive(false); //Apago el canvas
+
+        cont.saltoActual = 0;
+        mapin.ReiniciarMapa();
     }
 
     public void Menu()
     {
         DistanciaMonedas dm = DM.GetComponent<DistanciaMonedas>();
 
-        this.gameObject.SetActive(false); //Apago el canvas
-        CanvIn.SetActive(true);
+        CanvMuerte.gameObject.SetActive(false); //Apago el canvas
+        CanvIn.gameObject.SetActive(true);
         textoMonedas.text = dm.monedas.ToString();
         textoDistancia.text = dm.distancia.ToString();
     }

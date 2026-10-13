@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class Detectar : MonoBehaviour
     public GameObject DM;
     [SerializeField] private Transform jugador;
 
+    public int boostAct = 0; //0-ningun0, 1-boost doble puntuacion, 2-boost obstaculos
     private Vector3 posicionAnterior;
 
     void Start()
@@ -27,21 +29,22 @@ public class Detectar : MonoBehaviour
         Vector3 desplazamiento = jugador.position - posicionAnterior;
 
         // Contamos solo el movimiento horizontal (X y Z)
-        desplazamiento.y = 0f;
-        dm.distancia += desplazamiento.magnitude;
-
-        posicionAnterior = jugador.position;
-        dm.ActualizarDistancia();
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        //Si colisiona con un obtaculo
-        if (collision.gameObject.tag == "Obstaculo")
+        if(boostAct != 1)
         {
-            Muerte muerte = GetComponent<Muerte>();
-            muerte.Death();
+            desplazamiento.y = 0f;
+            dm.distancia += desplazamiento.magnitude;
+
+            posicionAnterior = jugador.position;
+            dm.ActualizarDistancia();
         }
+        else
+        {
+            desplazamiento.y = 0f;
+            dm.distancia += desplazamiento.magnitude * 2;
+            posicionAnterior = jugador.position;
+            dm.ActualizarDistancia();
+        }
+
     }
 
     private void OnTriggerEnter(Collider other)
@@ -55,6 +58,34 @@ public class Detectar : MonoBehaviour
             dm.ActualizarMonedas();
 
         }
+
+        //Si colisiona con un obtaculo
+        if (other.gameObject.tag == "Obstaculo" && boostAct != 2)
+        {
+            Muerte muerte = GetComponent<Muerte>();
+            muerte.Death();
+        }
+
+        if(other.gameObject.tag == "Boost1")
+        {
+            boostAct = 1;
+            Destroy(other.gameObject);
+            StartCoroutine(boostTiempo());
+        }
+
+        if (other.gameObject.tag == "Boost2")
+        {
+            boostAct = 2;
+            Destroy(other.gameObject);
+            StartCoroutine(boostTiempo());
+        }
+
+        //Si colisiona con un obtaculo
+        if (other.gameObject.tag == "Border")
+        {
+            Muerte muerte = GetComponent<Muerte>();
+            muerte.Death();
+        }
     }
 
 
@@ -66,6 +97,13 @@ public class Detectar : MonoBehaviour
         posicionAnterior = jugador.position;
 
         dm.ActualizarDistancia();
+    }
+
+    IEnumerator boostTiempo()
+    {
+        yield return new WaitForSeconds(3f);
+        boostAct = 0;
+        yield return null;
     }
 
 
