@@ -37,6 +37,11 @@ public class CanvasMuerte : MonoBehaviour
     public void Menu()
     {
         DistanciaMonedas dm = DM.GetComponent<DistanciaMonedas>();
+        ControladorPato cont = pato.GetComponent<ControladorPato>();
+
+        pato.transform.position = Spawn.transform.position; //Reseteo la posicion del pato
+        cont.saltoActual = 0; //Reseteo los saltos del pato
+        mapin.ReiniciarMapa(); //Reseteo el mapa
 
         CanvMuerte.gameObject.SetActive(false); //Apago el canvas
         CanvIn.gameObject.SetActive(true);

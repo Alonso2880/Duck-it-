@@ -145,7 +145,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 61ee9adbe22af994888d1b86adb56237, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.579
+      value: 1.003
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 61ee9adbe22af994888d1b86adb56237, type: 3}
       propertyPath: m_LocalPosition.z
@@ -236,8 +236,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.17, y: 1.74, z: 1.8}
-  m_Center: {x: 0, y: -0, z: 0.06}
+  m_Size: {x: 2.17, y: 2.11, z: 1.92}
+  m_Center: {x: 0.08, y: 0.08, z: 0.1}
 --- !u!114 &12347342
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,7 +281,7 @@ MonoBehaviour:
   velocidad: 8
   FuerzaSalto: 5
   saltoActual: 0
-  radioSuelo: 0.5
+  radioSuelo: 1
   layerSuelo:
     serializedVersion: 2
     m_Bits: 64
@@ -855,7 +855,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Oh no, you're dead! Do you want to come back to life? Pay up.
+  m_text: 'Oh no, you''re dead! '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2149,11 +2149,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 873973779}
   m_CullTransparentMesh: 1
---- !u!1 &951802729 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1141629924575216558, guid: 88f77a08c62d00146afe85e3979e3f0a, type: 3}
-  m_PrefabInstance: {fileID: 8605856229817508620}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1072841700
 GameObject:
   m_ObjectHideFlags: 0
@@ -3348,9 +3343,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapaInfinito
   player: {fileID: 12347346}
-  currentSegment: {fileID: 951802729}
+  currentSegment: {fileID: 1141629924575216558, guid: 88f77a08c62d00146afe85e3979e3f0a, type: 3}
   mapA: {fileID: 1141629924575216558, guid: 88f77a08c62d00146afe85e3979e3f0a, type: 3}
-  mapB: {fileID: 4312383451882826716, guid: c1c7aa8213917904db40b739addb118f, type: 3}
+  mapB: {fileID: 1141629924575216558, guid: 88f77a08c62d00146afe85e3979e3f0a, type: 3}
   segmentLength: 74.3
 --- !u!1 &1479156841
 GameObject:
@@ -4239,14 +4234,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: M1
       objectReference: {fileID: 0}
-    - target: {fileID: 1141629924575216558, guid: 88f77a08c62d00146afe85e3979e3f0a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1937880312020161933, guid: 88f77a08c62d00146afe85e3979e3f0a, type: 3}
-      propertyPath: m_TagString
-      value: Boost2
-      objectReference: {fileID: 0}
     - target: {fileID: 2417941446665803089, guid: 88f77a08c62d00146afe85e3979e3f0a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4286,38 +4273,6 @@ PrefabInstance:
     - target: {fileID: 2417941446665803089, guid: 88f77a08c62d00146afe85e3979e3f0a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3547157305518684362, guid: 88f77a08c62d00146afe85e3979e3f0a, type: 3}
-      propertyPath: m_TagString
-      value: Boost1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5780424685315620288, guid: 88f77a08c62d00146afe85e3979e3f0a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.06
-      objectReference: {fileID: 0}
-    - target: {fileID: 6389393427530301329, guid: 88f77a08c62d00146afe85e3979e3f0a, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.84
-      objectReference: {fileID: 0}
-    - target: {fileID: 6515555785646280604, guid: 88f77a08c62d00146afe85e3979e3f0a, type: 3}
-      propertyPath: m_Enabled
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7761770413220043863, guid: 88f77a08c62d00146afe85e3979e3f0a, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7761770413220043863, guid: 88f77a08c62d00146afe85e3979e3f0a, type: 3}
-      propertyPath: m_TagString
-      value: Border
-      objectReference: {fileID: 0}
-    - target: {fileID: 9105569838466739633, guid: 88f77a08c62d00146afe85e3979e3f0a, type: 3}
-      propertyPath: m_Convex
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9105569838466739633, guid: 88f77a08c62d00146afe85e3979e3f0a, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -83,6 +83,7 @@ public class Detectar : MonoBehaviour
         //Si colisiona con un obtaculo
         if (other.gameObject.tag == "Border")
         {
+            Debug.Log("Borde detectado");
             Muerte muerte = GetComponent<Muerte>();
             muerte.Death();
         }
