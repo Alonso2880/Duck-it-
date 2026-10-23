@@ -81,6 +81,11 @@ public class ControladorPato : MonoBehaviour
         }
     }
 
+    public void BloquearEntrada()
+    {
+        entradaBloqueada = true;
+    }
+
     void FixedUpdate()
     {
         Muerte muerte = GetComponent<Muerte>();

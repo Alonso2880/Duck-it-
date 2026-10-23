@@ -8,6 +8,8 @@ public class Detectar : MonoBehaviour
     public GameObject DM;
     [SerializeField] private Transform jugador;
 
+    public CheckPoints check;
+
     public int boostAct = 0; //0-ningun0, 1-boost doble puntuacion, 2-boost obstaculos
     private Vector3 posicionAnterior;
 
@@ -86,6 +88,11 @@ public class Detectar : MonoBehaviour
             Debug.Log("Borde detectado");
             Muerte muerte = GetComponent<Muerte>();
             muerte.Death();
+        }
+
+        if(other.gameObject.tag == "CheckPoint")
+        {
+            check.RegistrarCheckPoint(other.gameObject);
         }
     }
 
