@@ -82,6 +82,16 @@ public class Detectar : MonoBehaviour
             StartCoroutine(boostTiempo());
         }
 
+        if (other.gameObject.CompareTag("Boost3"))
+        {
+            boostAct = 3;
+            ControladorPato controlador = GetComponent<ControladorPato>();
+
+            controlador.ActivarBoostLento();
+
+            Destroy(other.gameObject);
+        }
+
         //Si colisiona con un obtaculo
         if (other.gameObject.tag == "Border")
         {

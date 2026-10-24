@@ -10,6 +10,7 @@ TagManager:
   - Boost2
   - Border
   - CheckPoint
+  - Boost3
   layers:
   - Default
   - TransparentFX

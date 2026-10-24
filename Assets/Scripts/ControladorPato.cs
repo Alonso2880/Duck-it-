@@ -1,11 +1,21 @@
 
+using System.Collections;
 using UnityEngine;
 
 public class ControladorPato : MonoBehaviour
 {
-    [Header("Velocidad avanzar")]
+    [Header("Velocidad y aceleracion")]
     public float velocidad = 5f;
+    public float aceleracion = 0.5f;
+    public float velocidadMaxima = 15f;
+
+    private float velocidadActual;
     private Rigidbody rb;
+
+    [Header("Boost de velocidad inicial")]
+    public float duracionBoostLento = 3f;
+    private bool boostLentoActivo = false;
+    private Coroutine rutinaBoostLento;
 
     [Header("Salto")]
     public float FuerzaSalto = 5f;
@@ -30,14 +40,21 @@ public class ControladorPato : MonoBehaviour
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        velocidadActual = velocidad;
         ultimaPosicionX = transform.position.x;
     }
 
     void Update()
     {
+        //Aceleración progresiva hasta alcanzar el máximo.
+        velocidadActual = Mathf.Min( velocidadActual + aceleracion * Time.deltaTime,velocidadMaxima);
+
+        //El boost modifica la velocidad aplicada, pero no reinicia la aceleración acumulada.
+        float velocidadAplicada = boostLentoActivo? velocidad : velocidadActual;
+
         // Movimiento hacia delante
         Vector3 Velocidad = rb.linearVelocity;
-        Velocidad.x = velocidad;
+        Velocidad.x = velocidadAplicada;
         rb.linearVelocity = Velocidad;
 
         // Detectar cuándo se sueltan las entradas.
@@ -84,6 +101,41 @@ public class ControladorPato : MonoBehaviour
     public void BloquearEntrada()
     {
         entradaBloqueada = true;
+    }
+
+    public void ActivarBoostLento()
+    {
+        if (rutinaBoostLento != null)
+        {
+            StopCoroutine(rutinaBoostLento);
+        }
+
+        rutinaBoostLento = StartCoroutine(BoostLento());
+    }
+
+    private IEnumerator BoostLento()
+    {
+        boostLentoActivo = true;
+
+        yield return new WaitForSeconds(duracionBoostLento);
+
+        boostLentoActivo = false;
+        rutinaBoostLento = null;
+    }
+
+    public void ReiniciarVelocidad()
+    {
+        velocidadActual = velocidad;
+        boostLentoActivo = false;
+
+        if (rutinaBoostLento != null)
+        {
+            StopCoroutine(rutinaBoostLento);
+            rutinaBoostLento = null;
+        }
+
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
     }
 
     void FixedUpdate()

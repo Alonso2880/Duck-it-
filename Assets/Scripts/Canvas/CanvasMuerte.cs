@@ -35,6 +35,7 @@ public class CanvasMuerte : MonoBehaviour
         detectar.ResetearDistancia();
         CanvMuerte.gameObject.SetActive(false); //Apago el canvas
 
+        cont.ReiniciarVelocidad();
         cont.saltoActual = 0;
         mapin.ReiniciarMapa();
     }

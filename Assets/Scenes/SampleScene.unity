@@ -280,6 +280,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControladorPato
   velocidad: 8
+  aceleracion: 0.5
+  velocidadMaxima: 150
+  duracionBoostLento: 3
   FuerzaSalto: 5
   saltoActual: 0
   radioSuelo: 1
@@ -639,6 +642,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControladorPato
   velocidad: 8
+  aceleracion: 0.5
+  velocidadMaxima: 15
+  duracionBoostLento: 3
   FuerzaSalto: 5
   saltoActual: 0
   radioSuelo: 0.5
