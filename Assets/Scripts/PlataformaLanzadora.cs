@@ -42,18 +42,12 @@ public class PlataformaLanzadora : MonoBehaviour
         // Calcular la velocidad necesaria para alcanzar la altura objetivo.
         float gravedad = Physics.gravity.y;
 
-        float velocidadNecesaria = Mathf.Sqrt(
-            -2f * gravedad * alturaRestante
-        );
+        float velocidadNecesaria = Mathf.Sqrt(-2f * gravedad * alturaRestante);
 
         rb.useGravity = true;
 
         // Lanzamiento vertical hacia arriba.
-        rb.linearVelocity = new Vector3(
-            0f,
-            velocidadNecesaria,
-            0f
-        );
+        rb.linearVelocity = new Vector3(0f, velocidadNecesaria,0f);
     }
 
     private void OnTriggerEnter(Collider other)
