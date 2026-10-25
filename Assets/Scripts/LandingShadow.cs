@@ -31,10 +31,7 @@ public class LandingShadow : MonoBehaviour
             shadow.position = hit.point + hit.normal * offset;
 
             // Adaptar la sombra a la inclinación del suelo
-            shadow.rotation = Quaternion.FromToRotation(
-                Vector3.forward,
-                hit.normal
-            );
+            //shadow.rotation = Quaternion.FromToRotation( Vector3.forward,hit.normal);
         }
         else
         {
