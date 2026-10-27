@@ -3520,7 +3520,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MapaInfinito
   player: {fileID: 12347346}
-  currentSegment: {fileID: 1141629924575216558, guid: 88f77a08c62d00146afe85e3979e3f0a, type: 3}
+  mapaInicial: {fileID: 1749501521}
   mapA: {fileID: 1141629924575216558, guid: 88f77a08c62d00146afe85e3979e3f0a, type: 3}
   mapB: {fileID: 1141629924575216558, guid: 88f77a08c62d00146afe85e3979e3f0a, type: 3}
   segmentLength: 74.3
@@ -4070,6 +4070,11 @@ MonoBehaviour:
   distancia: 0
   textoMonedas: {fileID: 1990136304}
   textoDistancia: {fileID: 818121377}
+--- !u!1 &1749501521 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1141629924575216558, guid: 88f77a08c62d00146afe85e3979e3f0a, type: 3}
+  m_PrefabInstance: {fileID: 8605856229817508620}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1759197525
 GameObject:
   m_ObjectHideFlags: 0
@@ -4525,7 +4530,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5081038944963524754, guid: 04fe687e007c1b548a7d29c12a120fd1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.08
+      value: -0.02
       objectReference: {fileID: 0}
     - target: {fileID: 5081038944963524754, guid: 04fe687e007c1b548a7d29c12a120fd1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4557,6 +4562,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5081038944963524754, guid: 04fe687e007c1b548a7d29c12a120fd1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7947824614664382776, guid: 04fe687e007c1b548a7d29c12a120fd1, type: 3}
+      propertyPath: modo
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

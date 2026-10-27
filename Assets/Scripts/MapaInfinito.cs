@@ -1,29 +1,40 @@
+
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MapaInfinito : MonoBehaviour
 {
     [Header("Referencias")]
     public Transform player;
-    public GameObject currentSegment;
+
+    // El mapa que siempre permanece en la escena.
+    public GameObject mapaInicial;
+
     public GameObject mapA;
     public GameObject mapB;
 
     [Header("Configuracion")]
     public float segmentLength = 100f;
 
+    private GameObject currentSegment;
     private GameObject nextSegment;
+
     private bool nextIsB = true;
 
     private Vector3 posicionInicialMapa;
     private Quaternion rotacionInicialMapa;
 
+    // Guardamos todos los tramos creados por este script.
+    private List<GameObject> tramosGenerados =
+        new List<GameObject>();
+
     void Start()
     {
-        if (player == null || currentSegment == null ||
+        if (player == null || mapaInicial == null ||
             mapA == null || mapB == null)
         {
             Debug.LogError(
-                "EndlessMap: faltan referencias en el Inspector."
+                "MapaInfinito: faltan referencias en el Inspector."
             );
             enabled = false;
             return;
@@ -32,14 +43,17 @@ public class MapaInfinito : MonoBehaviour
         if (segmentLength <= 0f)
         {
             Debug.LogError(
-                "EndlessMap: la longitud debe ser mayor que cero."
+                "MapaInfinito: la longitud debe ser mayor que cero."
             );
             enabled = false;
             return;
         }
 
-        posicionInicialMapa = currentSegment.transform.position;
-        rotacionInicialMapa = currentSegment.transform.rotation;
+        // Guardamos el mapa permanente.
+        posicionInicialMapa = mapaInicial.transform.position;
+        rotacionInicialMapa = mapaInicial.transform.rotation;
+
+        currentSegment = mapaInicial;
 
         CrearSiguienteTramo();
     }
@@ -54,8 +68,15 @@ public class MapaInfinito : MonoBehaviour
 
         if (player.position.x >= finalActual)
         {
-            Destroy(currentSegment);
+            // Nunca destruimos el mapa inicial.
+            if (currentSegment != mapaInicial)
+            {
+                tramosGenerados.Remove(currentSegment);
+                Destroy(currentSegment);
+            }
+
             currentSegment = nextSegment;
+            nextSegment = null;
 
             nextIsB = !nextIsB;
 
@@ -67,44 +88,44 @@ public class MapaInfinito : MonoBehaviour
     {
         GameObject prefab = nextIsB ? mapB : mapA;
 
-        Vector3 posicion = currentSegment.transform.position
-                         + Vector3.right * segmentLength;
+        Vector3 posicion =
+            currentSegment.transform.position
+            + Vector3.right * segmentLength;
 
         nextSegment = Instantiate(
             prefab,
             posicion,
             currentSegment.transform.rotation
         );
+
+        tramosGenerados.Add(nextSegment);
     }
 
     public void ReiniciarMapa()
     {
-        // Eliminar el tramo siguiente, si existe.
-        if (nextSegment != null)
-            Destroy(nextSegment);
-
-        // Recuperar el tramo inicial si fue destruido.
-        if (currentSegment == null)
+        // Destruir todos los tramos generados durante la partida.
+        foreach (GameObject tramo in tramosGenerados)
         {
-            currentSegment = Instantiate(
-                mapA,
-                posicionInicialMapa,
-                rotacionInicialMapa
-            );
-        }
-        else
-        {
-            // Restaurar su posición original.
-            currentSegment.transform.SetPositionAndRotation(
-                posicionInicialMapa,
-                rotacionInicialMapa
-            );
+            if (tramo != null)
+                Destroy(tramo);
         }
 
-        // Volver a empezar con el tramo B.
+        tramosGenerados.Clear();
+
+        // Restaurar el mapa inicial, que nunca se destruye.
+        mapaInicial.transform.SetPositionAndRotation(
+            posicionInicialMapa,
+            rotacionInicialMapa
+        );
+
+        currentSegment = mapaInicial;
+        nextSegment = null;
+
+        // Reiniciar la secuencia A/B.
         nextIsB = true;
 
-        // Crear el siguiente tramo junto al inicial.
+        // Crear únicamente el siguiente tramo.
         CrearSiguienteTramo();
     }
 }
+

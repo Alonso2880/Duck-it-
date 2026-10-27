@@ -3,11 +3,18 @@ using UnityEngine;
 
 public class PlataformaLanzadora : MonoBehaviour
 {
+    public enum ModoLanzamiento
+    {
+        HaciaArriba,
+        HaciaAbajo
+    }
+
     [Header("Referencias")]
     public Transform puntoLanzamiento;
     public GameObject prefabProyectil;
 
     [Header("Configuración")]
+    public ModoLanzamiento modo = ModoLanzamiento.HaciaArriba;
     public float alturaObjetivo = 3f;
     public float velocidadSubida = 8f;
 
@@ -18,7 +25,8 @@ public class PlataformaLanzadora : MonoBehaviour
         if (puntoLanzamiento == null || prefabProyectil == null)
             return;
 
-        GameObject proyectil = Instantiate(prefabProyectil,puntoLanzamiento.position, puntoLanzamiento.rotation);
+        GameObject proyectil = Instantiate(prefabProyectil,puntoLanzamiento.position, puntoLanzamiento.rotation
+        );
 
         Rigidbody rb = proyectil.GetComponent<Rigidbody>();
 
@@ -29,25 +37,34 @@ public class PlataformaLanzadora : MonoBehaviour
             return;
         }
 
-        // Calcular cuánto debe subir para alcanzar Y = 3.
-        float alturaRestante = alturaObjetivo - proyectil.transform.position.y;
-
-        if (alturaRestante <= 0f)
-        {
-            Debug.LogWarning("El proyectil ya está en la altura objetivo o por encima.");
-            Destroy(proyectil);
-            return;
-        }
-
-        // Calcular la velocidad necesaria para alcanzar la altura objetivo.
-        float gravedad = Physics.gravity.y;
-
-        float velocidadNecesaria = Mathf.Sqrt(-2f * gravedad * alturaRestante);
-
         rb.useGravity = true;
 
-        // Lanzamiento vertical hacia arriba.
-        rb.linearVelocity = new Vector3(0f, velocidadNecesaria,0f);
+        // Modo de lanzamiento hacia arriba.
+        if (modo == ModoLanzamiento.HaciaArriba)
+        {
+            float alturaRestante =
+                alturaObjetivo - proyectil.transform.position.y;
+
+            if (alturaRestante <= 0f)
+            {
+                Debug.LogWarning(
+                    "El proyectil ya está en la altura objetivo o por encima."
+                );
+                Destroy(proyectil);
+                return;
+            }
+
+            float gravedad = Physics.gravity.y;
+            float velocidadNecesaria =
+                Mathf.Sqrt(-2f * gravedad * alturaRestante);
+
+            rb.linearVelocity = new Vector3( 0f,velocidadNecesaria,0f);
+        }
+        // Modo de lanzamiento hacia abajo.
+        else if (modo == ModoLanzamiento.HaciaAbajo)
+        {
+            rb.linearVelocity = new Vector3(0f, -velocidadSubida,0f);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
