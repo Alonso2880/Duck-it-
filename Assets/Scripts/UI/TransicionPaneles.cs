@@ -1,12 +1,16 @@
+
 using UnityEngine;
 
 public class TransicionPaneles : MonoBehaviour
 {
-    [SerializeField] private RectTransform panelPrincipal;
-    [SerializeField] private RectTransform panelDestino;
+    [Header("Contenedores")]
+    [SerializeField] private RectTransform contenedorPrincipal;
+    [SerializeField] private RectTransform contenedorDestino;
+
+    [Header("Configuración")]
     [SerializeField, Min(0.05f)] private float duracion = 0.45f;
 
-    private RectTransform contenedor;
+    private RectTransform canvas;
     private CanvasGroup grupoPrincipal;
     private CanvasGroup grupoDestino;
 
@@ -16,49 +20,38 @@ public class TransicionPaneles : MonoBehaviour
 
     private void Start()
     {
-        if (panelPrincipal == null || panelDestino == null)
+        if (contenedorPrincipal == null || contenedorDestino == null)
         {
-            Debug.LogError(
-                "TransicionPaneles: arrastra los dos paneles al Inspector.",
-                this
-            );
+            Debug.LogError("Asigna los dos Empty en el Inspector.", this);
             return;
         }
 
-        if (panelPrincipal == panelDestino)
+        Canvas canvasPrincipal = contenedorPrincipal.GetComponentInParent<Canvas>();
+        Canvas canvasDestino = contenedorDestino.GetComponentInParent<Canvas>();
+
+        if (canvasPrincipal == null || canvasPrincipal != canvasDestino)
         {
-            Debug.LogError(
-                "TransicionPaneles: debes asignar dos paneles diferentes.",
-                this
-            );
+            Debug.LogError("Los dos contenedores deben pertenecer al mismo Canvas.", this);
             return;
         }
 
-        contenedor = panelPrincipal.parent as RectTransform;
+        canvas = canvasPrincipal.transform as RectTransform;
 
-        if (contenedor == null || panelDestino.parent != contenedor)
-        {
-            Debug.LogError(
-                "TransicionPaneles: los dos paneles deben tener el mismo padre.",
-                this
-            );
-            return;
-        }
+        grupoPrincipal = PrepararGrupo(contenedorPrincipal);
+        grupoDestino = PrepararGrupo(contenedorDestino);
 
-        grupoPrincipal = PrepararGrupo(panelPrincipal);
-        grupoDestino = PrepararGrupo(panelDestino);
-
-        panelPrincipal.gameObject.SetActive(true);
-        panelDestino.gameObject.SetActive(false);
+        // Estado inicial
+        contenedorPrincipal.gameObject.SetActive(true);
+        contenedorDestino.gameObject.SetActive(false);
 
         Canvas.ForceUpdateCanvases();
 
-        panelPrincipal.anchoredPosition = Vector2.zero;
-        panelDestino.anchoredPosition =
-            Vector2.down * contenedor.rect.height;
+        contenedorPrincipal.anchoredPosition = Vector2.zero;
+        contenedorDestino.anchoredPosition =
+            Vector2.down * canvas.rect.height;
 
         grupoPrincipal.interactable = true;
-        grupoDestino.interactable = false;
+        grupoPrincipal.blocksRaycasts = true;
 
         preparado = true;
     }
@@ -75,29 +68,42 @@ public class TransicionPaneles : MonoBehaviour
 
     private void CambiarPanel(bool abrir)
     {
-        if (!preparado || !isActiveAndEnabled || enTransicion)
-            return;
-
-        if (abrir == destinoAbierto)
+        if (!preparado || enTransicion || abrir == destinoAbierto)
             return;
 
         enTransicion = true;
 
-        Canvas.ForceUpdateCanvases();
-
-        float altura = contenedor.rect.height;
+        float altura = canvas.rect.height;
         float direccion = abrir ? 1f : -1f;
 
-        RectTransform salida = abrir ? panelPrincipal : panelDestino;
-        RectTransform entrada = abrir ? panelDestino : panelPrincipal;
+        RectTransform salida = abrir
+            ? contenedorPrincipal
+            : contenedorDestino;
 
-        grupoPrincipal.interactable = false;
-        grupoDestino.interactable = false;
+        RectTransform entrada = abrir
+            ? contenedorDestino
+            : contenedorPrincipal;
+
+        CanvasGroup grupoSalida = abrir
+            ? grupoPrincipal
+            : grupoDestino;
+
+        CanvasGroup grupoEntrada = abrir
+            ? grupoDestino
+            : grupoPrincipal;
+
+        // Activar el contenedor de entrada antes de animarlo.
+        entrada.gameObject.SetActive(true);
 
         salida.anchoredPosition = Vector2.zero;
-        entrada.anchoredPosition = Vector2.down * altura * direccion;
+        entrada.anchoredPosition =
+            Vector2.down * altura * direccion;
 
-        entrada.gameObject.SetActive(true);
+        grupoSalida.interactable = false;
+        grupoSalida.blocksRaycasts = false;
+
+        grupoEntrada.interactable = false;
+        grupoEntrada.blocksRaycasts = false;
 
         LeanTween.moveY(salida, altura * direccion, duracion)
             .setEase(LeanTweenType.easeInOutCubic)
@@ -108,24 +114,29 @@ public class TransicionPaneles : MonoBehaviour
             .setIgnoreTimeScale(true)
             .setOnComplete(() =>
             {
+                // Desactivar el contenedor anterior.
                 salida.gameObject.SetActive(false);
+
                 entrada.anchoredPosition = Vector2.zero;
 
                 destinoAbierto = abrir;
 
                 grupoPrincipal.interactable = !abrir;
+                grupoPrincipal.blocksRaycasts = !abrir;
+
                 grupoDestino.interactable = abrir;
+                grupoDestino.blocksRaycasts = abrir;
 
                 enTransicion = false;
             });
     }
 
-    private CanvasGroup PrepararGrupo(RectTransform panel)
+    private CanvasGroup PrepararGrupo(RectTransform contenedor)
     {
-        CanvasGroup grupo = panel.GetComponent<CanvasGroup>();
+        CanvasGroup grupo = contenedor.GetComponent<CanvasGroup>();
 
         if (grupo == null)
-            grupo = panel.gameObject.AddComponent<CanvasGroup>();
+            grupo = contenedor.gameObject.AddComponent<CanvasGroup>();
 
         grupo.alpha = 1f;
         grupo.blocksRaycasts = true;
@@ -133,3 +144,4 @@ public class TransicionPaneles : MonoBehaviour
         return grupo;
     }
 }
+
