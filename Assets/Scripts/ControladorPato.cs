@@ -22,6 +22,9 @@ public class ControladorPato : MonoBehaviour
     private int MaxSaltos = 3;
     public int saltoActual = 0;
 
+    [Header("Control de distancia del salto")]
+    public float velocidadMaximaEnSalto = 7f;
+
     [Header("Suelo")]
     public float radioSuelo = 1f;
     public LayerMask layerSuelo;
@@ -54,7 +57,17 @@ public class ControladorPato : MonoBehaviour
 
         // Movimiento hacia delante
         Vector3 Velocidad = rb.linearVelocity;
-        Velocidad.x = velocidadAplicada;
+
+        // Limitar la velocidad horizontal mientras está en el aire
+        if (!IsGrounded)
+        {
+            Velocidad.x = Mathf.Min(velocidadAplicada, velocidadMaximaEnSalto);
+        }
+        else
+        {
+            Velocidad.x = velocidadAplicada;
+        }
+
         rb.linearVelocity = Velocidad;
 
         // Detectar cuándo se sueltan las entradas.

@@ -25,8 +25,11 @@ public class MapaInfinito : MonoBehaviour
     private Quaternion rotacionInicialMapa;
 
     // Guardamos todos los tramos creados por este script.
-    private List<GameObject> tramosGenerados =
-        new List<GameObject>();
+    private List<GameObject> tramosGenerados =new List<GameObject>();
+
+    public ObjetosReiniciables[] objetosIniciales;
+    private Transform grupoMonedas;
+    private Transform grupoBoosts;
 
     void Start()
     {
@@ -52,6 +55,10 @@ public class MapaInfinito : MonoBehaviour
         // Guardamos el mapa permanente.
         posicionInicialMapa = mapaInicial.transform.position;
         rotacionInicialMapa = mapaInicial.transform.rotation;
+
+        objetosIniciales = mapaInicial.GetComponentsInChildren<ObjetosReiniciables>(true);
+        grupoMonedas = mapaInicial.transform.Find("Monedas&Boost");
+        grupoBoosts = mapaInicial.transform.Find("Boost");
 
         currentSegment = mapaInicial;
 
@@ -101,9 +108,10 @@ public class MapaInfinito : MonoBehaviour
         tramosGenerados.Add(nextSegment);
     }
 
+
     public void ReiniciarMapa()
     {
-        // Destruir todos los tramos generados durante la partida.
+        // Destruir todos los tramos generados.
         foreach (GameObject tramo in tramosGenerados)
         {
             if (tramo != null)
@@ -112,20 +120,33 @@ public class MapaInfinito : MonoBehaviour
 
         tramosGenerados.Clear();
 
-        // Restaurar el mapa inicial, que nunca se destruye.
+        // Restaurar el mapa inicial.
         mapaInicial.transform.SetPositionAndRotation(
             posicionInicialMapa,
             rotacionInicialMapa
         );
 
+        // Activar los grupos completos.
+        if (grupoMonedas != null)
+            grupoMonedas.gameObject.SetActive(true);
+
+        if (grupoBoosts != null)
+            grupoBoosts.gameObject.SetActive(true);
+
+        // Reactivar todas las monedas y boosts.
+        foreach (ObjetosReiniciables objeto in objetosIniciales)
+        {
+            Debug.Log("Hola");
+                objeto.gameObject.SetActive(true);
+        }
+
         currentSegment = mapaInicial;
         nextSegment = null;
 
-        // Reiniciar la secuencia A/B.
         nextIsB = true;
 
-        // Crear únicamente el siguiente tramo.
         CrearSiguienteTramo();
     }
+
 }
 

@@ -55,7 +55,7 @@ public class Detectar : MonoBehaviour
         if (other.gameObject.tag == "Coin")
         {
             DistanciaMonedas dm = DM.GetComponent<DistanciaMonedas>();
-            Destroy(other.gameObject);
+            other.gameObject.GetComponent<ObjetosReiniciables>().Recoger();
             dm.monedas++;
             dm.ActualizarMonedas();
 
@@ -71,14 +71,14 @@ public class Detectar : MonoBehaviour
         if(other.gameObject.tag == "Boost1")
         {
             boostAct = 1;
-            Destroy(other.gameObject);
+            other.gameObject.GetComponent<ObjetosReiniciables>().Recoger();
             StartCoroutine(boostTiempo());
         }
 
         if (other.gameObject.tag == "Boost2")
         {
             boostAct = 2;
-            Destroy(other.gameObject);
+            other.gameObject.GetComponent<ObjetosReiniciables>().Recoger();
             StartCoroutine(boostTiempo());
         }
 
@@ -89,7 +89,7 @@ public class Detectar : MonoBehaviour
 
             controlador.ActivarBoostLento();
 
-            Destroy(other.gameObject);
+            other.gameObject.GetComponent<ObjetosReiniciables>().Recoger();
         }
 
         //Si colisiona con un obtaculo
