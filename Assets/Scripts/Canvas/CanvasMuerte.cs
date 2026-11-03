@@ -24,6 +24,8 @@ public class CanvasMuerte : MonoBehaviour
 
     [Header("Audio")]
     public AudioSource audioClick;
+    public AudioSource audioMenu;
+    public AudioSource audioJuego;
 
     //Funcion que permite reintentar desde el punto de partida
     public void reintentar()
@@ -48,6 +50,9 @@ public class CanvasMuerte : MonoBehaviour
     public void Menu()
     {
         audioClick.Play();
+        audioJuego.Stop();
+        audioMenu.Play();
+        
         DistanciaMonedas dm = DM.GetComponent<DistanciaMonedas>();
         ControladorPato cont = pato.GetComponent<ControladorPato>();
 

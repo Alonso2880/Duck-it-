@@ -7,6 +7,8 @@ public class CanvasInicio : MonoBehaviour
 
     [Header("Audio")]
     public AudioSource audioClick;
+    public AudioSource audioMenu;
+    public AudioSource audioJuego;
 
     void Start()
     {
@@ -17,6 +19,9 @@ public class CanvasInicio : MonoBehaviour
     public void EmpezarJuego()
     {
         audioClick.Play();
+        audioMenu.Stop();
+        audioJuego.Play();
+
         Time.timeScale = 1f;
         CI.SetActive(false);
         DM.SetActive(true);
