@@ -92,7 +92,6 @@ public class CanvasMuerte : MonoBehaviour
         rb.angularVelocity = Vector3.zero;
 
         //Reseteos de la distancia y de los saltos
-        detectar.ResetearDistancia();
         cont.saltoActual = 0;
 
         //Ocultar canvas muerte
@@ -121,9 +120,9 @@ public class CanvasMuerte : MonoBehaviour
     public void monedas()
     {
         DistanciaMonedas dm = DM.GetComponent<DistanciaMonedas>();
-        if (dm.monedas >= 0)
+        if (dm.monedas >= 10)
         {
-            dm.monedas -= 0;
+            dm.monedas -= 10;
             Revivir();
         }
     }

@@ -3,133 +3,178 @@ using UnityEngine;
 
 public class TransicionPaneles : MonoBehaviour
 {
-    [Header("Contenedores")]
-    [SerializeField] private RectTransform contenedorPrincipal;
-    [SerializeField] private RectTransform contenedorDestino;
+    [Header("Paneles")]
+    [SerializeField] private RectTransform panelPrincipal;
+    [SerializeField] private RectTransform panelMisiones;
+    [SerializeField] private RectTransform panelPerfil;
+    [SerializeField] private RectTransform panelCompras;
 
     [Header("Configuración")]
     [SerializeField, Min(0.05f)] private float duracion = 0.45f;
 
     private RectTransform canvas;
     private CanvasGroup grupoPrincipal;
-    private CanvasGroup grupoDestino;
+    private CanvasGroup grupoMisiones;
+    private CanvasGroup grupoPerfil;
+    private CanvasGroup grupoCompras;
+
+    private RectTransform panelActual;
+    private CanvasGroup grupoActual;
 
     private bool preparado;
     private bool enTransicion;
-    private bool destinoAbierto;
+
+    public GameObject ajustes;
 
     private void Start()
     {
-        if (contenedorPrincipal == null || contenedorDestino == null)
+        // Comprobar que todos los paneles están asignados.
+        if (panelPrincipal == null ||
+            panelMisiones == null ||
+            panelPerfil == null ||
+            panelCompras == null)
         {
-            Debug.LogError("Asigna los dos Empty en el Inspector.", this);
+            Debug.LogError("Asigna todos los paneles en el Inspector.", this);
             return;
         }
 
-        Canvas canvasPrincipal = contenedorPrincipal.GetComponentInParent<Canvas>();
-        Canvas canvasDestino = contenedorDestino.GetComponentInParent<Canvas>();
+        Canvas canvasPrincipal = panelPrincipal.GetComponentInParent<Canvas>();
 
-        if (canvasPrincipal == null || canvasPrincipal != canvasDestino)
+        if (canvasPrincipal == null ||
+            panelMisiones.GetComponentInParent<Canvas>() != canvasPrincipal ||
+            panelPerfil.GetComponentInParent<Canvas>() != canvasPrincipal ||
+            panelCompras.GetComponentInParent<Canvas>() != canvasPrincipal)
         {
-            Debug.LogError("Los dos contenedores deben pertenecer al mismo Canvas.", this);
+            Debug.LogError("Todos los paneles deben pertenecer al mismo Canvas.", this);
             return;
         }
 
         canvas = canvasPrincipal.transform as RectTransform;
 
-        grupoPrincipal = PrepararGrupo(contenedorPrincipal);
-        grupoDestino = PrepararGrupo(contenedorDestino);
+        // Preparar CanvasGroups.
+        grupoPrincipal = PrepararGrupo(panelPrincipal);
+        grupoMisiones = PrepararGrupo(panelMisiones);
+        grupoPerfil = PrepararGrupo(panelPerfil);
+        grupoCompras = PrepararGrupo(panelCompras);
 
-        // Estado inicial
-        contenedorPrincipal.gameObject.SetActive(true);
-        contenedorDestino.gameObject.SetActive(false);
+        // Estado inicial.
+        panelPrincipal.gameObject.SetActive(true);
+
+        panelMisiones.gameObject.SetActive(false);
+        panelPerfil.gameObject.SetActive(false);
+        panelCompras.gameObject.SetActive(false);
 
         Canvas.ForceUpdateCanvases();
 
-        contenedorPrincipal.anchoredPosition = Vector2.zero;
-        contenedorDestino.anchoredPosition =
-            Vector2.down * canvas.rect.height;
+        panelPrincipal.anchoredPosition = Vector2.zero;
+
+        panelMisiones.anchoredPosition = Vector2.down * canvas.rect.height;
+        panelPerfil.anchoredPosition = Vector2.down * canvas.rect.height;
+        panelCompras.anchoredPosition = Vector2.down * canvas.rect.height;
 
         grupoPrincipal.interactable = true;
         grupoPrincipal.blocksRaycasts = true;
 
+        grupoMisiones.interactable = false;
+        grupoMisiones.blocksRaycasts = false;
+
+        grupoPerfil.interactable = false;
+        grupoPerfil.blocksRaycasts = false;
+
+        grupoCompras.interactable = false;
+        grupoCompras.blocksRaycasts = false;
+
+        panelActual = panelPrincipal;
+        grupoActual = grupoPrincipal;
+
         preparado = true;
     }
 
-    public void AbrirPanel()
+    // BOTONES PARA ABRIR PANELES
+
+    public void AbrirMisiones()
     {
-        CambiarPanel(true);
+        CambiarPanel(panelMisiones, grupoMisiones);
     }
 
-    public void Volver()
+    public void AbrirPerfil()
     {
-        CambiarPanel(false);
+        CambiarPanel(panelPerfil, grupoPerfil);
     }
 
-    private void CambiarPanel(bool abrir)
+    public void AbrirCompras()
     {
-        if (!preparado || enTransicion || abrir == destinoAbierto)
+        CambiarPanel(panelCompras, grupoCompras);
+    }
+
+    // BOTÓN PARA VOLVER AL PANEL PRINCIPAL
+
+    public void VolverPrincipal()
+    {
+        CambiarPanel(panelPrincipal, grupoPrincipal);
+    }
+
+    // TRANSICIÓN GENERAL
+
+    private void CambiarPanel(RectTransform nuevoPanel, CanvasGroup nuevoGrupo)
+    {
+        if (!preparado || enTransicion || panelActual == nuevoPanel)
             return;
 
         enTransicion = true;
 
         float altura = canvas.rect.height;
-        float direccion = abrir ? 1f : -1f;
 
-        RectTransform salida = abrir
-            ? contenedorPrincipal
-            : contenedorDestino;
+        RectTransform salida = panelActual;
+        RectTransform entrada = nuevoPanel;
 
-        RectTransform entrada = abrir
-            ? contenedorDestino
-            : contenedorPrincipal;
+        CanvasGroup grupoSalida = grupoActual;
+        CanvasGroup grupoEntrada = nuevoGrupo;
 
-        CanvasGroup grupoSalida = abrir
-            ? grupoPrincipal
-            : grupoDestino;
-
-        CanvasGroup grupoEntrada = abrir
-            ? grupoDestino
-            : grupoPrincipal;
-
-        // Activar el contenedor de entrada antes de animarlo.
+        // Activar el panel de entrada.
         entrada.gameObject.SetActive(true);
 
+        // Posiciones iniciales.
         salida.anchoredPosition = Vector2.zero;
-        entrada.anchoredPosition =
-            Vector2.down * altura * direccion;
 
+        entrada.anchoredPosition = Vector2.down * altura;
+
+        // Bloquear interacciones durante la animación.
         grupoSalida.interactable = false;
         grupoSalida.blocksRaycasts = false;
 
         grupoEntrada.interactable = false;
         grupoEntrada.blocksRaycasts = false;
 
-        LeanTween.moveY(salida, altura * direccion, duracion)
+        // Animar salida.
+        LeanTween.moveY(salida, altura, duracion)
             .setEase(LeanTweenType.easeInOutCubic)
             .setIgnoreTimeScale(true);
 
+        // Animar entrada.
         LeanTween.moveY(entrada, 0f, duracion)
             .setEase(LeanTweenType.easeInOutCubic)
             .setIgnoreTimeScale(true)
             .setOnComplete(() =>
             {
-                // Desactivar el contenedor anterior.
+                // Desactivar el panel anterior.
                 salida.gameObject.SetActive(false);
 
                 entrada.anchoredPosition = Vector2.zero;
 
-                destinoAbierto = abrir;
+                // Actualizar panel actual.
+                panelActual = entrada;
+                grupoActual = grupoEntrada;
 
-                grupoPrincipal.interactable = !abrir;
-                grupoPrincipal.blocksRaycasts = !abrir;
-
-                grupoDestino.interactable = abrir;
-                grupoDestino.blocksRaycasts = abrir;
+                // Activar interacciones del nuevo panel.
+                grupoEntrada.interactable = true;
+                grupoEntrada.blocksRaycasts = true;
 
                 enTransicion = false;
             });
     }
+
+    // PREPARAR CANVAS GROUP
 
     private CanvasGroup PrepararGrupo(RectTransform contenedor)
     {
@@ -139,9 +184,21 @@ public class TransicionPaneles : MonoBehaviour
             grupo = contenedor.gameObject.AddComponent<CanvasGroup>();
 
         grupo.alpha = 1f;
-        grupo.blocksRaycasts = true;
+        grupo.interactable = false;
+        grupo.blocksRaycasts = false;
 
         return grupo;
     }
+
+    public void AbrirAjustes()
+    {
+        ajustes.SetActive(true);
+    }
+
+    public void CerrarAjustes()
+    {
+        ajustes.SetActive(false);
+    }
 }
+
 
