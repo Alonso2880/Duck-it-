@@ -22,9 +22,13 @@ public class CanvasMuerte : MonoBehaviour
     [SerializeField] private TMP_Text textoMonedas;
     [SerializeField] private TMP_Text textoDistancia;
 
+    [Header("Audio")]
+    public AudioSource audioClick;
+
     //Funcion que permite reintentar desde el punto de partida
     public void reintentar()
     {
+        audioClick.Play();
         Time.timeScale = 1f;
 
         pato.transform.position = Spawn.transform.position;
@@ -43,6 +47,7 @@ public class CanvasMuerte : MonoBehaviour
     //Funcion que vuelve al menu
     public void Menu()
     {
+        audioClick.Play();
         DistanciaMonedas dm = DM.GetComponent<DistanciaMonedas>();
         ControladorPato cont = pato.GetComponent<ControladorPato>();
 
@@ -60,6 +65,7 @@ public class CanvasMuerte : MonoBehaviour
 
     public void Revivir()
     {
+        audioClick.Play();
         //Referencias 
         Detectar detectar = pato.GetComponent<Detectar>();
         ControladorPato cont = pato.GetComponent<ControladorPato>();

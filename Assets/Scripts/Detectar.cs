@@ -13,6 +13,9 @@ public class Detectar : MonoBehaviour
     public int boostAct = 0; //0-ningun0, 1-boost doble puntuacion, 2-boost obstaculos
     private Vector3 posicionAnterior;
 
+    [Header("Audio")]
+    public AudioSource audioChocarte, audioCaerte;
+
     void Start()
     {
         if (jugador != null)
@@ -64,6 +67,7 @@ public class Detectar : MonoBehaviour
         //Si colisiona con un obtaculo
         if (other.gameObject.tag == "Obstaculo" && boostAct != 2)
         {
+            audioChocarte.Play();
             Muerte muerte = GetComponent<Muerte>();
             muerte.Death();
         }
@@ -96,6 +100,7 @@ public class Detectar : MonoBehaviour
         if (other.gameObject.tag == "Border")
         {
             Debug.Log("Borde detectado");
+            audioCaerte.Play();
             Muerte muerte = GetComponent<Muerte>();
             muerte.Death();
         }

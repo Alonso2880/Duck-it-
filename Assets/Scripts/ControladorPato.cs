@@ -34,6 +34,9 @@ public class ControladorPato : MonoBehaviour
     private float tiempoSinAvanzar = 0f;
     private float ultimaPosicionX;
 
+    [Header("Audio")]
+    public AudioSource audioJump;
+
     // Evita saltos mientras se mantiene pulsado
     // el dedo o la tecla al comenzar la partida.
     private bool entradaBloqueada = true;
@@ -194,6 +197,8 @@ public class ControladorPato : MonoBehaviour
             Vector3.up * FuerzaSalto,
             ForceMode.Impulse
         );
+
+        audioJump.Play();
     }
 }
 
