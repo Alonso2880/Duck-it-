@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 149847530822210245}
   - component: {fileID: 8955269910195117212}
   - component: {fileID: 1054872980208111856}
+  - component: {fileID: 1231414218537439332}
   m_Layer: 0
   m_Name: Proyectil
   m_TagString: Obstaculo
@@ -140,3 +141,15 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1231414218537439332
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1908769303059179263}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ccca557c94a384441b6029c6f0b1f292, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AutodestruccionBalas
