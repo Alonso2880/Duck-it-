@@ -12,6 +12,8 @@ public class CanvasMuerte : MonoBehaviour
     public MapaInfinito mapin;
     public GameObject pato;
 
+    public ControladorPato control;
+
     public CheckPoints check;
 
     [Header("Canvas")]
@@ -38,6 +40,7 @@ public class CanvasMuerte : MonoBehaviour
         Detectar detectar = pato.GetComponent<Detectar>();
         ControladorPato cont = pato.GetComponent<ControladorPato>();
 
+        control.entradaBloqueada = false;
         detectar.ResetearDistancia();
         CanvMuerte.gameObject.SetActive(false); //Apago el canvas
 
@@ -93,6 +96,7 @@ public class CanvasMuerte : MonoBehaviour
 
         //Reseteos de la distancia y de los saltos
         cont.saltoActual = 0;
+        control.entradaBloqueada = false;
 
         //Ocultar canvas muerte
         CanvMuerte.gameObject.SetActive(false);
@@ -123,6 +127,7 @@ public class CanvasMuerte : MonoBehaviour
         if (dm.monedas >= 10)
         {
             dm.monedas -= 10;
+            dm.ActualizarMonedas();
             Revivir();
         }
     }

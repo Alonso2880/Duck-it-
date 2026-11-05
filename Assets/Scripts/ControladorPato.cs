@@ -39,7 +39,7 @@ public class ControladorPato : MonoBehaviour
 
     // Evita saltos mientras se mantiene pulsado
     // el dedo o la tecla al comenzar la partida.
-    private bool entradaBloqueada = true;
+    public bool entradaBloqueada = true;
 
     public bool IsGrounded { get; private set; }
 
@@ -74,18 +74,8 @@ public class ControladorPato : MonoBehaviour
         rb.linearVelocity = Velocidad;
 
         // Detectar cuándo se sueltan las entradas.
-        if (entradaBloqueada)
-        {
-            bool dedoPulsado = Input.touchCount > 0;
-            bool espacioPulsado = Input.GetKey(KeyCode.Space);
-
-            if (!dedoPulsado && !espacioPulsado)
-            {
-                entradaBloqueada = false;
-            }
-        }
-        else
-        {
+        if (!entradaBloqueada)
+        { 
             // Salto con teclado
             if (Input.GetKeyDown(KeyCode.Space))
             {

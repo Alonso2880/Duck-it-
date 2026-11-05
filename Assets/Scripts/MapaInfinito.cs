@@ -136,7 +136,6 @@ public class MapaInfinito : MonoBehaviour
         // Reactivar todas las monedas y boosts.
         foreach (ObjetosReiniciables objeto in objetosIniciales)
         {
-            Debug.Log("Hola");
                 objeto.gameObject.SetActive(true);
         }
 

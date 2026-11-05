@@ -8,6 +8,11 @@ public class Detectar : MonoBehaviour
     public GameObject DM;
     [SerializeField] private Transform jugador;
 
+    [Header("Controlador patos")]
+    public ControladorPato control;
+
+    [Header("Checkpoints")]
+
     public CheckPoints check;
 
     public int boostAct = 0; //0-ningun0, 1-boost doble puntuacion, 2-boost obstaculos
@@ -69,6 +74,7 @@ public class Detectar : MonoBehaviour
         {
             audioChocarte.Play();
             Muerte muerte = GetComponent<Muerte>();
+            control.entradaBloqueada = true;
             muerte.Death();
         }
 
@@ -102,6 +108,7 @@ public class Detectar : MonoBehaviour
             Debug.Log("Borde detectado");
             audioCaerte.Play();
             Muerte muerte = GetComponent<Muerte>();
+            control.entradaBloqueada = true;
             muerte.Death();
         }
 
