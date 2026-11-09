@@ -24,6 +24,8 @@ public class CanvasMuerte : MonoBehaviour
     [SerializeField] private TMP_Text textoMonedas;
     [SerializeField] private TMP_Text textoDistancia;
 
+    [SerializeField] private TMP_Text textoRecordDistancia;
+
     [Header("Audio")]
     public AudioSource audioClick;
     public AudioSource audioMenu;
@@ -66,7 +68,14 @@ public class CanvasMuerte : MonoBehaviour
         CanvMuerte.gameObject.SetActive(false); //Apago el canvas
         CanvIn.gameObject.SetActive(true);
         textoMonedas.text = dm.monedas.ToString();
-        textoDistancia.text = dm.distancia.ToString();
+        textoDistancia.text = dm.distancia.ToString("F1") + " m";
+
+        //Actualizo el record distancia
+        if(dm.distancia > dm.recordDistancia)
+        {
+            dm.recordDistancia = dm.distancia;
+            textoRecordDistancia.text = dm.recordDistancia.ToString("F1");
+        }
     }
 
     //Funcion que permite revivir tras el ultimo checkpoint si tienes 10 monedas

@@ -7,6 +7,8 @@ public class DistanciaMonedas : MonoBehaviour
     public int monedas;
     public float distancia;
 
+    [HideInInspector] public float recordDistancia = 0;
+
     [Header("Referencias")]
     [SerializeField] private TMP_Text textoMonedas;
     [SerializeField] private TMP_Text textoDistancia;
