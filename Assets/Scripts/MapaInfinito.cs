@@ -13,6 +13,17 @@ public class MapaInfinito : MonoBehaviour
     public GameObject mapA;
     public GameObject mapB;
 
+    [Header("Mapas fase 2 y 3")]
+    public GameObject mapaFase2;
+    public GameObject mapaFase3;
+
+    private int fase = 1;
+
+    [Header("Distancia")]
+    [SerializeField] private DistanciaMonedas dist;
+    public float DistanciaFase2 = 400f;
+    public float DistnaciaFase3 = 800f;
+
     [Header("Configuracion")]
     public float segmentLength = 100f;
 
@@ -89,11 +100,33 @@ public class MapaInfinito : MonoBehaviour
 
             CrearSiguienteTramo();
         }
+
+        //Comprobamos la distancia para cambiar de fase
+        if (dist.distancia >= DistanciaFase2 && dist.distancia < DistnaciaFase3)
+            fase = 2;
+        if (dist.distancia >= DistnaciaFase3)
+            fase = 3;
+
     }
 
     void CrearSiguienteTramo()
     {
-        GameObject prefab = nextIsB ? mapB : mapA;
+        GameObject prefab = null;
+
+        switch (fase)
+        {
+            case 1:
+                prefab = nextIsB ? mapB : mapA;
+                break;
+
+            case 2:
+                prefab = mapaFase2;
+                break;
+
+            case 3:
+                prefab = mapaFase3;
+                break;
+        }
 
         Vector3 posicion =
             currentSegment.transform.position
@@ -117,6 +150,8 @@ public class MapaInfinito : MonoBehaviour
             if (tramo != null)
                 Destroy(tramo);
         }
+
+        fase = 1; //volvemos a fase 1
 
         tramosGenerados.Clear();
 
