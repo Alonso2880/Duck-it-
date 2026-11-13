@@ -9,12 +9,16 @@ public class EnviarRanking : MonoBehaviour
 
     public void SubmitScore(float score)
     {
-        string playerName = textoNombre.text;
-
-        if (string.IsNullOrWhiteSpace(playerName))
+        if (textoNombre == null)
+        {
             return;
-
-        rankingManager.SaveScore(playerName, score);
+        }
+        else
+        {
+            Debug.Log("hola");
+;            string playerName = textoNombre.text;
+            rankingManager.SaveScore(playerName, score);
+        }
     }
 
     public void ShowRanking()

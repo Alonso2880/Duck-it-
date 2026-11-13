@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class CanvasInicio : MonoBehaviour
@@ -11,6 +12,9 @@ public class CanvasInicio : MonoBehaviour
     public AudioSource audioClick;
     public AudioSource audioMenu;
     public AudioSource audioJuego;
+
+    [Header("Distancia")]
+    public DistanciaMonedas distancia;
 
     void Start()
     {
@@ -29,5 +33,7 @@ public class CanvasInicio : MonoBehaviour
         Time.timeScale = 1f;
         CI.SetActive(false);
         DM.SetActive(true);
+
+        distancia.distancia = 0;
     }
 }
