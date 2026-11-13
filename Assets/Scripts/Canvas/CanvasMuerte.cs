@@ -16,6 +16,8 @@ public class CanvasMuerte : MonoBehaviour
 
     public CheckPoints check;
 
+    public EnviarRanking enviar;
+
     [Header("Canvas")]
     public GameObject CanvIn;
     public GameObject CanvMuerte;
@@ -76,6 +78,8 @@ public class CanvasMuerte : MonoBehaviour
             dm.recordDistancia = dm.distancia;
             textoRecordDistancia.text = dm.recordDistancia.ToString("F1");
         }
+
+        enviar.SubmitScore(dm.distancia);
     }
 
     //Funcion que permite revivir tras el ultimo checkpoint si tienes 10 monedas
