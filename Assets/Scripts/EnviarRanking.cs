@@ -15,9 +15,9 @@ public class EnviarRanking : MonoBehaviour
         }
         else
         {
-            Debug.Log("hola");
-;            string playerName = textoNombre.text;
-            rankingManager.SaveScore(playerName, score);
+
+;          string playerName = textoNombre.text;
+           rankingManager.SaveScore(playerName, score);
         }
     }
 
