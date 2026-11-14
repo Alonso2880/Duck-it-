@@ -8,6 +8,8 @@ public class CanvasInicio : MonoBehaviour
     public GameObject CI;
     public ControladorPato control;
 
+    public CanvasMuerte canvasMuerte;
+
     [Header("Audio")]
     public AudioSource audioClick;
     public AudioSource audioMenu;
@@ -29,10 +31,16 @@ public class CanvasInicio : MonoBehaviour
         audioJuego.Play();
 
         control.entradaBloqueada = false;
+        control.enabled = false;
+
+        control.GetComponent<Rigidbody>().linearVelocity = Vector3.zero;
+        control.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
         Time.timeScale = 1f;
         CI.SetActive(false);
         DM.SetActive(true);
+
+        canvasMuerte.StartCoroutine(canvasMuerte.CountDown(control));
 
         distancia.distancia = 0;
     }

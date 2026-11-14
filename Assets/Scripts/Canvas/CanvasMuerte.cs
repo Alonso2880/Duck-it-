@@ -25,6 +25,11 @@ public class CanvasMuerte : MonoBehaviour
     public GameObject canvasMuerteAnuncioPrimero;
     public GameObject canvasMuerteAnuncioSegundo;
 
+    [Header("CountDown")]
+    public GameObject uno;
+    public GameObject dos;
+    public GameObject tres;
+    public GameObject start;
     private Coroutine countdown;
 
     [Header("Textos")]
@@ -126,27 +131,37 @@ public class CanvasMuerte : MonoBehaviour
         StartCoroutine(CountDown(cont));
     }
 
-    IEnumerator CountDown(ControladorPato cont)
+    public IEnumerator CountDown(ControladorPato cont)
     {
         cont.enabled = false;
-   
+
+        tres.SetActive(true);
         yield return new WaitForSeconds(1f);
-        Debug.Log("1");
+
+        tres.SetActive(false);
+        dos.SetActive(true);
         yield return new WaitForSeconds(1f);
-        Debug.Log("2");
+
+        dos.SetActive(false);
+        uno.SetActive(true);
         yield return new WaitForSeconds(1f);
-        Debug.Log("3");
+
+        uno.SetActive(false);
+        start.SetActive(true);
         yield return new WaitForSeconds(1f);
+
+        start.SetActive(false);
         cont.enabled = true;
+        cont.entradaBloqueada = false;
         yield return null;
     }
 
     public void monedas()
     {
         DistanciaMonedas dm = DM.GetComponent<DistanciaMonedas>();
-        if (dm.monedas >= 10)
+        if (dm.monedas >= 0)
         {
-            dm.monedas -= 10;
+            dm.monedas -= 0;
             dm.ActualizarMonedas();
             Revivir();
         }
