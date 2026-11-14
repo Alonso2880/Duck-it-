@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d3c806fc1160c4594e3c5de08070c6, type: 3}
+  m_Name: coins_booster_5
+  m_EditorClassIdentifier: Assembly-CSharp::MissionData
+  missionID: coins_booster_5
+  description: "Consigue 5 monedas mientras est\xE1s bajo los efectos de un potenciador activo"
+  missionType: 13
+  targetValue: 5
+  rewardCoins: 3

@@ -7,6 +7,8 @@ public class DistanciaMonedas : MonoBehaviour
     public int monedas;
     public float distancia;
 
+    public int MonedasTotalPartida = 0;
+
     [HideInInspector] public float recordDistancia = 0;
 
     [Header("Referencias")]

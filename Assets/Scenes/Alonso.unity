@@ -2807,6 +2807,7 @@ Transform:
   - {fileID: 208132891}
   - {fileID: 434212398}
   - {fileID: 964282610}
+  - {fileID: 785865302}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &269423897
@@ -6233,6 +6234,71 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!1 &785865301
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 785865302}
+  - component: {fileID: 785865303}
+  m_Layer: 0
+  m_Name: Misiones
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &785865302
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785865301}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 263151194}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &785865303
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 785865301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30173ffc35fe54444b7325ec85493ed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  allMissions:
+  - {fileID: 11400000, guid: e2fc979a85c41244786db682cf55db2f, type: 2}
+  - {fileID: 11400000, guid: e2fc979a85c41244786db682cf55db2f, type: 2}
+  - {fileID: 11400000, guid: ad3c1cb69cca1124fb6fe4142dca1b26, type: 2}
+  - {fileID: 11400000, guid: ede3c22f382dce94fbb2ddece5b9ae16, type: 2}
+  - {fileID: 11400000, guid: d82f2a18064dd1143b126b4f4a4f4125, type: 2}
+  - {fileID: 11400000, guid: 1ee1e1675c33d9a4f888ae3acad4f5cd, type: 2}
+  - {fileID: 11400000, guid: 6cf396f12c9235147afd05774768c1d6, type: 2}
+  - {fileID: 11400000, guid: fd7666d408ea6bd48ba5357f6411366d, type: 2}
+  - {fileID: 11400000, guid: 1247306d647ebea45b78bccb3be43ea1, type: 2}
+  - {fileID: 11400000, guid: 12f8b1bbf2eb23f4e940e26ad89a0868, type: 2}
+  - {fileID: 11400000, guid: bb2e7f004a7ad4e41976a9c280ee2aeb, type: 2}
+  - {fileID: 11400000, guid: 18202dc3ef05c9044a32abb412283914, type: 2}
+  - {fileID: 11400000, guid: bbf643e2471dfc348835b5b6931117c1, type: 2}
+  - {fileID: 11400000, guid: 54de977c3c8952348ab5328bd4508b67, type: 2}
+  maxActiveMissions: 3
+  distanciaMonedas: {fileID: 1712035291}
+  detectar: {fileID: 12347342}
+  controladorPato: {fileID: 12347344}
+  activeMissionIDs: []
+  missionProgress: []
 --- !u!1 &805641991
 GameObject:
   m_ObjectHideFlags: 0
@@ -8323,7 +8389,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1143238581
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13776,6 +13842,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DistanciaMonedas
   monedas: 0
   distancia: 0
+  MonedasTotalPartida: 0
   recordDistancia: 0
   textoMonedas: {fileID: 1990136304}
   textoDistancia: {fileID: 818121377}

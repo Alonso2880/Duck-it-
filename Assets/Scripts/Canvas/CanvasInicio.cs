@@ -43,5 +43,7 @@ public class CanvasInicio : MonoBehaviour
         canvasMuerte.StartCoroutine(canvasMuerte.CountDown(control));
 
         distancia.distancia = 0;
+
+        MissionManager.Instance?.StartNewRun();
     }
 }

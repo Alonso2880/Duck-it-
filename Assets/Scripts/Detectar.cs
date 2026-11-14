@@ -38,8 +38,14 @@ public class Detectar : MonoBehaviour
         // Calculamos el movimiento desde el ultimo fotograma
         Vector3 desplazamiento = jugador.position - posicionAnterior;
 
+        // Contabilizar tiempo de Slowmo.
+        if (control != null && control.BoostLentoActivo)
+        {
+            MissionManager.Instance?.AddSlowmoTime(Time.deltaTime);
+        }
+
         // Contamos solo el movimiento horizontal (X y Z)
-        if(boostAct != 1)
+        if (boostAct != 1)
         {
             desplazamiento.y = 0f;
             dm.distancia += desplazamiento.magnitude;
@@ -65,7 +71,10 @@ public class Detectar : MonoBehaviour
             DistanciaMonedas dm = DM.GetComponent<DistanciaMonedas>();
             other.gameObject.GetComponent<ObjetosReiniciables>().Recoger();
             dm.monedas++;
+            dm.MonedasTotalPartida++;
             dm.ActualizarMonedas();
+
+            MissionManager.Instance?.SetGeneralCoins(dm.MonedasTotalPartida);
 
         }
 
@@ -81,6 +90,7 @@ public class Detectar : MonoBehaviour
         if(other.gameObject.tag == "Boost1")
         {
             boostAct = 1;
+            MissionManager.Instance?.NotifyBoosterCollected();
             other.gameObject.GetComponent<ObjetosReiniciables>().Recoger();
             StartCoroutine(boostTiempo());
         }
@@ -88,12 +98,15 @@ public class Detectar : MonoBehaviour
         if (other.gameObject.tag == "Boost2")
         {
             boostAct = 2;
+            MissionManager.Instance?.NotifyBoosterCollected();
             other.gameObject.GetComponent<ObjetosReiniciables>().Recoger();
             StartCoroutine(boostTiempo());
         }
 
         if (other.gameObject.CompareTag("Boost3"))
         {
+            MissionManager.Instance?.NotifyBoosterCollected();
+
             boostAct = 3;
             ControladorPato controlador = GetComponent<ControladorPato>();
 
@@ -127,6 +140,8 @@ public class Detectar : MonoBehaviour
         posicionAnterior = jugador.position;
 
         dm.ActualizarDistancia();
+
+        MissionManager.Instance?.StartNewRun();
     }
 
     IEnumerator boostTiempo()
@@ -136,5 +151,13 @@ public class Detectar : MonoBehaviour
         yield return null;
     }
 
-
+    public bool HayPotenciadorActivo
+    {
+        get
+        {
+            return boostAct == 1 ||
+                   boostAct == 2 ||
+                   (control != null && control.BoostLentoActivo);
+        }
+    }
 }

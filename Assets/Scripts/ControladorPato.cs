@@ -45,6 +45,7 @@ public class ControladorPato : MonoBehaviour
 
     public bool IsGrounded { get; private set; }
 
+    public bool BoostLentoActivo => boostLentoActivo;
     void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -181,6 +182,8 @@ public class ControladorPato : MonoBehaviour
             return;
 
         saltoActual++;
+
+        MissionManager.Instance?.RegisterJump(saltoActual);
 
         Vector3 Velocidad = rb.linearVelocity;
         Velocidad.y = 0f;
