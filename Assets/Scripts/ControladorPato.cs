@@ -21,6 +21,8 @@ public class ControladorPato : MonoBehaviour
     public float FuerzaSalto = 5f;
     private int MaxSaltos = 3;
     public int saltoActual = 0;
+    public float escalaSalto = 0.51f;
+    private Vector3 escalaOriginal;
 
     [Header("Control de distancia del salto")]
     public float velocidadMaximaEnSalto = 7f;
@@ -48,6 +50,7 @@ public class ControladorPato : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         velocidadActual = velocidad;
         ultimaPosicionX = transform.position.x;
+        escalaOriginal = transform.localScale; //Guardo la escala original
     }
 
     void Update()
@@ -187,8 +190,45 @@ public class ControladorPato : MonoBehaviour
             Vector3.up * FuerzaSalto,
             ForceMode.Impulse
         );
+        StartCoroutine(AnimarEscala());
 
         audioJump.Play();
+    }
+
+    private IEnumerator AnimarEscala()
+    {
+        float duracion = 0.1f;
+        float tiempo = 0f;
+
+        Vector3 escalaReducida = Vector3.one * 0.51f;
+
+        // Reducir escala gradualmente
+        while (tiempo < duracion)
+        {
+            tiempo += Time.deltaTime;
+            transform.localScale = Vector3.Lerp(
+                escalaOriginal,
+                escalaReducida,
+                tiempo / duracion
+            );
+            yield return null;
+        }
+
+        tiempo = 0f;
+
+        // Recuperar escala gradualmente
+        while (tiempo < duracion)
+        {
+            tiempo += Time.deltaTime;
+            transform.localScale = Vector3.Lerp(
+                escalaReducida,
+                escalaOriginal,
+                tiempo / duracion
+            );
+            yield return null;
+        }
+
+        transform.localScale = escalaOriginal;
     }
 }
 

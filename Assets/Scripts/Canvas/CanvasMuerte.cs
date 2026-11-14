@@ -21,6 +21,11 @@ public class CanvasMuerte : MonoBehaviour
     [Header("Canvas")]
     public GameObject CanvIn;
     public GameObject CanvMuerte;
+    public GameObject canvasMuerteAnuncio;
+    public GameObject canvasMuerteAnuncioPrimero;
+    public GameObject canvasMuerteAnuncioSegundo;
+
+    private Coroutine countdown;
 
     [Header("Textos")]
     [SerializeField] private TMP_Text textoMonedas;
@@ -68,6 +73,7 @@ public class CanvasMuerte : MonoBehaviour
         mapin.ReiniciarMapa(); //Reseteo el mapa
 
         CanvMuerte.gameObject.SetActive(false); //Apago el canvas
+
         CanvIn.gameObject.SetActive(true);
         textoMonedas.text = dm.monedas.ToString();
         textoDistancia.text = dm.distancia.ToString("F1") + " m";
@@ -113,6 +119,8 @@ public class CanvasMuerte : MonoBehaviour
 
         //Ocultar canvas muerte
         CanvMuerte.gameObject.SetActive(false);
+        canvasMuerteAnuncio.SetActive(false);
+        canvasMuerteAnuncioPrimero.SetActive(true);
 
         Time.timeScale = 1f;
         StartCoroutine(CountDown(cont));
@@ -124,7 +132,6 @@ public class CanvasMuerte : MonoBehaviour
    
         yield return new WaitForSeconds(1f);
         Debug.Log("1");
-
         yield return new WaitForSeconds(1f);
         Debug.Log("2");
         yield return new WaitForSeconds(1f);
@@ -143,5 +150,32 @@ public class CanvasMuerte : MonoBehaviour
             dm.ActualizarMonedas();
             Revivir();
         }
+    }
+
+    public void VerAnuncio()
+    {
+        if (countdown != null)
+        {
+            StopCoroutine(countdown);
+            countdown = null;
+        }
+
+        canvasMuerteAnuncioPrimero.SetActive(false);
+        canvasMuerteAnuncioSegundo.SetActive(true);
+    }
+
+    public void IniciarCountdown()
+    {
+        countdown = StartCoroutine(CountdownAnuncio());
+    }
+
+    public IEnumerator CountdownAnuncio()
+    {
+        yield return new WaitForSecondsRealtime(10f);
+        Debug.Log("Empezado");
+        Menu();
+        canvasMuerteAnuncio.SetActive(false);
+        canvasMuerteAnuncioPrimero.SetActive(true);
+        
     }
 }
