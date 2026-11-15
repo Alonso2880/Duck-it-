@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +5,9 @@ using UnityEngine;
 public class MissionManager : MonoBehaviour
 {
     public static MissionManager Instance;
+
+    [Header("Referencia notificaciones")]
+    public List<GameObject> notificationObjects;
 
     [Header("Mission Configuration")]
     [SerializeField] private List<MissionData> allMissions;
@@ -16,11 +18,13 @@ public class MissionManager : MonoBehaviour
     public Detectar detectar;
     public ControladorPato controladorPato;
 
-    [Header("Active Missions")]
+    [Header("Misiones activas")]
     [SerializeField] private List<string> activeMissionIDs = new List<string>();
     [SerializeField]
     private List<MissionProgress> missionProgress =
         new List<MissionProgress>();
+
+    
 
     private List<string> claimedMissionIDs = new List<string>();
 
@@ -52,6 +56,13 @@ public class MissionManager : MonoBehaviour
         InitializeMissions();
 
         ResetMetricTracking();
+
+        bool pendingRewards = missionProgress.Exists(p => p.completed && !p.claimed);
+
+        foreach (GameObject obj in notificationObjects)
+        {
+            obj.SetActive(pendingRewards);
+        }
     }
 
     private void Update()
@@ -196,6 +207,11 @@ public class MissionManager : MonoBehaviour
         {
             progress.currentProgress = data.targetValue;
             progress.completed = true;
+
+            foreach (GameObject obj in notificationObjects)
+            {
+                obj.SetActive(true);
+            }
 
             Debug.Log("Misión completada: " + data.description);
         }
@@ -469,6 +485,8 @@ public class MissionManager : MonoBehaviour
         }
     }
 
+
+
     #endregion
 
     #region CLAIM REWARD
@@ -496,6 +514,13 @@ public class MissionManager : MonoBehaviour
         missionProgress.Remove(progress);
 
         AddRandomMission();
+
+        bool pendingRewards = missionProgress.Exists(p => p.completed && !p.claimed);
+
+        foreach (GameObject obj in notificationObjects)
+        {
+            obj.SetActive(pendingRewards);
+        }
 
         OnMissionUpdated?.Invoke();
 
