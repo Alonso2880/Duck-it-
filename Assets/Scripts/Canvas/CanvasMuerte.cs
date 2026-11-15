@@ -126,6 +126,7 @@ public class CanvasMuerte : MonoBehaviour
         CanvMuerte.gameObject.SetActive(false);
         canvasMuerteAnuncio.SetActive(false);
         canvasMuerteAnuncioPrimero.SetActive(true);
+        canvasMuerteAnuncioSegundo.SetActive(false);
 
         Time.timeScale = 1f;
         StartCoroutine(CountDown(cont));
