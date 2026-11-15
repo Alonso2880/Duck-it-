@@ -43,6 +43,9 @@ public class CanvasMuerte : MonoBehaviour
     public AudioSource audioMenu;
     public AudioSource audioJuego;
 
+    [Header("Efectos pato")]
+    public GameObject Splash;
+
     //Funcion que permite reintentar desde el punto de partida
     public void reintentar()
     {
@@ -53,6 +56,11 @@ public class CanvasMuerte : MonoBehaviour
 
         Detectar detectar = pato.GetComponent<Detectar>();
         ControladorPato cont = pato.GetComponent<ControladorPato>();
+
+        //Efectos pato
+        Splash.SetActive(false);
+        Animator animatorSplash = Splash.GetComponent<Animator>();
+        animatorSplash.SetBool("Death", false);
 
         control.entradaBloqueada = false;
         detectar.ResetearDistancia();
@@ -89,6 +97,11 @@ public class CanvasMuerte : MonoBehaviour
             dm.recordDistancia = dm.distancia;
             textoRecordDistancia.text = dm.recordDistancia.ToString("F1");
         }
+
+        //Efectos pato
+        Splash.SetActive(false);
+        Animator animatorSplash = Splash.GetComponent<Animator>();
+        animatorSplash.SetBool("Death", false);
 
         enviar.SubmitScore(dm.distancia);
     }
@@ -127,6 +140,11 @@ public class CanvasMuerte : MonoBehaviour
         canvasMuerteAnuncio.SetActive(false);
         canvasMuerteAnuncioPrimero.SetActive(true);
         canvasMuerteAnuncioSegundo.SetActive(false);
+
+        //Efectos pato
+        Splash.SetActive(false);
+        Animator animatorSplash = Splash.GetComponent<Animator>();
+        animatorSplash.SetBool("Death", false);
 
         Time.timeScale = 1f;
         StartCoroutine(CountDown(cont));

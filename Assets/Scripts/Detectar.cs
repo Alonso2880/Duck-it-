@@ -8,8 +8,11 @@ public class Detectar : MonoBehaviour
     public GameObject DM;
     [SerializeField] private Transform jugador;
 
-    [Header("Controlador patos")]
+    [Header("Controlador pato")]
     public ControladorPato control;
+
+    [Header("Efectos pato")]
+    public GameObject Splash;
 
     [Header("Checkpoints")]
 
@@ -115,14 +118,24 @@ public class Detectar : MonoBehaviour
             other.gameObject.GetComponent<ObjetosReiniciables>().Recoger();
         }
 
-        //Si colisiona con un obtaculo
+        //Si colisiona con el borde
         if (other.gameObject.tag == "Border")
         {
             Debug.Log("Borde detectado");
             audioCaerte.Play();
             Muerte muerte = GetComponent<Muerte>();
             control.entradaBloqueada = true;
+
             muerte.Death();
+        }
+
+        //Si colisiona con splash
+        if(other.gameObject.tag == "Splash")
+        {
+            //Activo el efecto splash
+            Splash.SetActive(true);
+            Animator animatorSplash = Splash.GetComponent<Animator>();
+            animatorSplash.SetBool("Death", true);
         }
 
         if(other.gameObject.tag == "CheckPoint")
