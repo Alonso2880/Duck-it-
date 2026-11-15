@@ -39,6 +39,10 @@ public class ControladorPato : MonoBehaviour
     [Header("Audio")]
     public AudioSource audioJump;
 
+    [Header("Efectos pato")]
+    public GameObject efectoSaltar;
+    private Animator animatorSaltar;
+
     // Evita saltos mientras se mantiene pulsado
     // el dedo o la tecla al comenzar la partida.
     public bool entradaBloqueada = true;
@@ -52,6 +56,8 @@ public class ControladorPato : MonoBehaviour
         velocidadActual = velocidad;
         ultimaPosicionX = transform.position.x;
         escalaOriginal = transform.localScale; //Guardo la escala original
+        animatorSaltar = efectoSaltar.GetComponent<Animator>();
+
     }
 
     void Update()
@@ -183,7 +189,11 @@ public class ControladorPato : MonoBehaviour
 
         saltoActual++;
 
-        MissionManager.Instance?.RegisterJump(saltoActual);
+        //Efecto saltar
+        animatorSaltar.SetTrigger("Salto");
+
+
+        MissionManager.Instance?.RegisterJump(saltoActual); //Registro el salto en el mision manager
 
         Vector3 Velocidad = rb.linearVelocity;
         Velocidad.y = 0f;
