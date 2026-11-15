@@ -207,9 +207,10 @@ public class CanvasMuerte : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(10f);
         Debug.Log("Empezado");
-        Menu();
+        
         canvasMuerteAnuncio.SetActive(false);
         canvasMuerteAnuncioPrimero.SetActive(true);
+        CanvMuerte.SetActive(true);
         
     }
 }
