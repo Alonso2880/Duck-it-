@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class DistanciaMonedas : MonoBehaviour
 {
@@ -20,21 +21,36 @@ public class DistanciaMonedas : MonoBehaviour
     [Header("Textos distancia")]
     [SerializeField] private TMP_Text textoDistancia;
 
+    [Header("Texto nombre")]
+    [SerializeField] private TMP_Text textonombreMenu;
+    [SerializeField] private TMP_Text textoNombre;
+
     public void ActualizarMonedas()
     {
         if (textoMonedasMainMenu != null)
-            textoMonedasMainMenu.text = "Coins: " + monedas;
+            textoMonedasMainMenu.text = monedas.ToString();
 
         if (textoMonedasShop != null)
-            textoMonedasShop.text = "Coins: " + monedas;
+            textoMonedasShop.text = monedas.ToString();
 
         if (textoMonedasMissions != null)
-            textoMonedasMissions.text = "Coins: " + monedas;
+            textoMonedasMissions.text = monedas.ToString();
     }
 
     public void ActualizarDistancia()
     {
         if (textoDistancia != null)
             textoDistancia.text = distancia.ToString("F1") + " m";
+    }
+
+    public void ActualizarNombre()
+    {
+        string nombre = textoNombre.text;
+        textonombreMenu.text = nombre;
+    }
+
+    private void Start()
+    {
+        ActualizarNombre();
     }
 }

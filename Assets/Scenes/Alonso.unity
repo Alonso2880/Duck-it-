@@ -12833,6 +12833,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1712035291}
+        m_TargetAssemblyTypeName: DistanciaMonedas, Assembly-CSharp
+        m_MethodName: ActualizarNombre
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1064764427
 GameObject:
   m_ObjectHideFlags: 0
@@ -20154,6 +20166,8 @@ MonoBehaviour:
   textoMonedasShop: {fileID: 685821243}
   textoMonedasMissions: {fileID: 817542618}
   textoDistancia: {fileID: 818121377}
+  textonombreMenu: {fileID: 1445655524}
+  textoNombre: {fileID: 805641993}
 --- !u!1 &1715891118
 GameObject:
   m_ObjectHideFlags: 0
@@ -23864,6 +23878,18 @@ MonoBehaviour:
       - m_Target: {fileID: 1294607869}
         m_TargetAssemblyTypeName: TransicionPaneles, Assembly-CSharp
         m_MethodName: CerrarPerfil
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1712035291}
+        m_TargetAssemblyTypeName: DistanciaMonedas, Assembly-CSharp
+        m_MethodName: ActualizarNombre
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
