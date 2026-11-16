@@ -18,6 +18,8 @@ public class CanvasMuerte : MonoBehaviour
 
     public EnviarRanking enviar;
 
+    public RankingUIManager rankingUI;
+
     [Header("Canvas")]
     public GameObject CanvIn;
     public GameObject CanvMuerte;
@@ -104,6 +106,7 @@ public class CanvasMuerte : MonoBehaviour
         animatorSplash.SetBool("Death", false);
 
         enviar.SubmitScore(dm.distancia);
+        rankingUI.UpdateRanking();
     }
 
     //Funcion que permite revivir tras el ultimo checkpoint si tienes 10 monedas

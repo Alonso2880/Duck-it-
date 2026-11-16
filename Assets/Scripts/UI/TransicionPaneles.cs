@@ -3,185 +3,402 @@ using UnityEngine;
 
 public class TransicionPaneles : MonoBehaviour
 {
-    [Header("Paneles")]
-    [SerializeField] private RectTransform panelPrincipal;
-    [SerializeField] private RectTransform panelMisiones;
-    [SerializeField] private RectTransform panelPerfil;
-    [SerializeField] private RectTransform panelCompras;
+    public RankingUIManager rankingUI;
 
-    [Header("Configuración")]
-    [SerializeField, Min(0.05f)] private float duracion = 0.45f;
+    // =========================================================
+    // CONFIGURACIÓN DEL MENÚ
+    // =========================================================
+
+    [System.Serializable]
+    private class ElementoMenu
+    {
+        [Header("Panel al que lleva este botón")]
+        public RectTransform panel;
+
+        [Header("Iconos del botón")]
+        public GameObject iconoNoSeleccionado;
+        public RectTransform iconoSeleccionado;
+    }
+
+    [Header("Paneles e iconos del menú")]
+    [Tooltip("Orden: 0 Skins, 1 Misiones, 2 MenuPrincipal, 3 AddFriends, 4 Shop")]
+    [SerializeField] private ElementoMenu[] elementosMenu = new ElementoMenu[5];
+
+    [Header("Configuración de las transiciones")]
+    [SerializeField, Min(0.05f)] private float duracionTransicion = 0.45f;
+
+    [Header("Animación del botón seleccionado")]
+    [SerializeField, Min(0f)] private float desplazamientoSeleccionado = 15f;
+    [SerializeField, Min(0.05f)] private float duracionSeleccion = 0.2f;
+
+    // =========================================================
+    // POP-UPS
+    // =========================================================
+
+    [Header("Ventanas emergentes")]
+    [SerializeField] private GameObject popupPerfil;
+    [SerializeField] private GameObject popupRanking;
+    [SerializeField] private GameObject popupAjustes;
+
+    [Header("Animación de los pop-ups")]
+    [SerializeField, Min(0.05f)] private float duracionPopup = 0.2f;
+
+    // =========================================================
+    // VARIABLES INTERNAS
+    // =========================================================
+
+    private const int INDICE_MENU_PRINCIPAL = 2;
 
     private RectTransform canvas;
-    private CanvasGroup grupoPrincipal;
-    private CanvasGroup grupoMisiones;
-    private CanvasGroup grupoPerfil;
-    private CanvasGroup grupoCompras;
 
-    private RectTransform panelActual;
-    private CanvasGroup grupoActual;
+    private CanvasGroup[] gruposPaneles;
+    private Vector2[] posicionesBaseIconos;
+
+    private CanvasGroup grupoPopupPerfil;
+    private CanvasGroup grupoPopupRanking;
+    private CanvasGroup grupoPopupAjustes;
+
+    private int indicePanelActual = INDICE_MENU_PRINCIPAL;
 
     private bool preparado;
     private bool enTransicion;
 
-    public GameObject ajustes;
+    [Header("Escala de los pop-ups")]
+    [SerializeField, Range(0.1f, 1f)]
+    private float escalaInicialPopup = 0.75f;
+
+    [SerializeField]
+    private LeanTweenType animacionPopup = LeanTweenType.easeOutBack;
+
+    // =========================================================
+    // INICIALIZACIÓN
+    // =========================================================
 
     private void Start()
     {
-        // Comprobar que todos los paneles están asignados.
-        if (panelPrincipal == null ||
-            panelMisiones == null ||
-            panelPerfil == null ||
-            panelCompras == null)
-        {
-            Debug.LogError("Asigna todos los paneles en el Inspector.", this);
+        if (!ValidarConfiguracion())
             return;
-        }
-
-        Canvas canvasPrincipal = panelPrincipal.GetComponentInParent<Canvas>();
-
-        if (canvasPrincipal == null ||
-            panelMisiones.GetComponentInParent<Canvas>() != canvasPrincipal ||
-            panelPerfil.GetComponentInParent<Canvas>() != canvasPrincipal ||
-            panelCompras.GetComponentInParent<Canvas>() != canvasPrincipal)
-        {
-            Debug.LogError("Todos los paneles deben pertenecer al mismo Canvas.", this);
-            return;
-        }
-
-        canvas = canvasPrincipal.transform as RectTransform;
-
-        // Preparar CanvasGroups.
-        grupoPrincipal = PrepararGrupo(panelPrincipal);
-        grupoMisiones = PrepararGrupo(panelMisiones);
-        grupoPerfil = PrepararGrupo(panelPerfil);
-        grupoCompras = PrepararGrupo(panelCompras);
-
-        // Estado inicial.
-        panelPrincipal.gameObject.SetActive(true);
-
-        panelMisiones.gameObject.SetActive(false);
-        panelPerfil.gameObject.SetActive(false);
-        panelCompras.gameObject.SetActive(false);
 
         Canvas.ForceUpdateCanvases();
 
-        panelPrincipal.anchoredPosition = Vector2.zero;
+        gruposPaneles = new CanvasGroup[elementosMenu.Length];
+        posicionesBaseIconos = new Vector2[elementosMenu.Length];
 
-        panelMisiones.anchoredPosition = Vector2.down * canvas.rect.height;
-        panelPerfil.anchoredPosition = Vector2.down * canvas.rect.height;
-        panelCompras.anchoredPosition = Vector2.down * canvas.rect.height;
+        // Preparar todos los paneles.
+        for (int i = 0; i < elementosMenu.Length; i++)
+        {
+            ElementoMenu elemento = elementosMenu[i];
 
-        grupoPrincipal.interactable = true;
-        grupoPrincipal.blocksRaycasts = true;
+            gruposPaneles[i] = PrepararGrupo(elemento.panel);
 
-        grupoMisiones.interactable = false;
-        grupoMisiones.blocksRaycasts = false;
+            posicionesBaseIconos[i] =
+                elemento.iconoSeleccionado.anchoredPosition;
 
-        grupoPerfil.interactable = false;
-        grupoPerfil.blocksRaycasts = false;
+            elemento.panel.anchoredPosition = Vector2.zero;
 
-        grupoCompras.interactable = false;
-        grupoCompras.blocksRaycasts = false;
+            bool esPanelInicial = i == INDICE_MENU_PRINCIPAL;
 
-        panelActual = panelPrincipal;
-        grupoActual = grupoPrincipal;
+            elemento.panel.gameObject.SetActive(esPanelInicial);
+
+            gruposPaneles[i].alpha = 1f;
+            gruposPaneles[i].interactable = esPanelInicial;
+            gruposPaneles[i].blocksRaycasts = esPanelInicial;
+        }
+
+        // Preparar los iconos del menú.
+        ActualizarIconosMenu(INDICE_MENU_PRINCIPAL, false);
+
+        // Preparar las ventanas emergentes.
+        grupoPopupPerfil = PrepararPopup(popupPerfil);
+        grupoPopupRanking = PrepararPopup(popupRanking);
+        grupoPopupAjustes = PrepararPopup(popupAjustes);
+
+        indicePanelActual = INDICE_MENU_PRINCIPAL;
 
         preparado = true;
     }
 
-    // BOTONES PARA ABRIR PANELES
+    // =========================================================
+    // VALIDAR CONFIGURACIÓN
+    // =========================================================
+
+    private bool ValidarConfiguracion()
+    {
+        if (elementosMenu == null || elementosMenu.Length != 5)
+        {
+            Debug.LogError(
+                "Debes configurar exactamente 5 elementos en el menú.",
+                this
+            );
+
+            return false;
+        }
+
+        for (int i = 0; i < elementosMenu.Length; i++)
+        {
+            if (elementosMenu[i] == null ||
+                elementosMenu[i].panel == null ||
+                elementosMenu[i].iconoNoSeleccionado == null ||
+                elementosMenu[i].iconoSeleccionado == null)
+            {
+                Debug.LogError(
+                    "Falta asignar algún panel o icono del elemento " + i +
+                    " en el Inspector.",
+                    this
+                );
+
+                return false;
+            }
+        }
+
+        Canvas canvasPrincipal =
+            elementosMenu[0].panel.GetComponentInParent<Canvas>();
+
+        if (canvasPrincipal == null)
+        {
+            Debug.LogError(
+                "Los paneles deben pertenecer a un Canvas.",
+                this
+            );
+
+            return false;
+        }
+
+        canvas = canvasPrincipal.transform as RectTransform;
+
+        if (canvas == null)
+        {
+            Debug.LogError("No se ha podido obtener el RectTransform del Canvas.", this);
+            return false;
+        }
+
+        for (int i = 1; i < elementosMenu.Length; i++)
+        {
+            Canvas canvasPanel =
+                elementosMenu[i].panel.GetComponentInParent<Canvas>();
+
+            if (canvasPanel != canvasPrincipal)
+            {
+                Debug.LogError(
+                    "Todos los paneles deben pertenecer al mismo Canvas.",
+                    this
+                );
+
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    // =========================================================
+    // BOTONES DEL MENÚ
+    // =========================================================
+
+    public void AbrirSkins()
+    {
+        CambiarPanel(0);
+    }
 
     public void AbrirMisiones()
     {
-        CambiarPanel(panelMisiones, grupoMisiones);
+        CambiarPanel(1);
     }
 
-    public void AbrirPerfil()
+    public void AbrirMenuPrincipal()
     {
-        CambiarPanel(panelPerfil, grupoPerfil);
+        CambiarPanel(2);
+    }
+
+    public void AbrirAddFriends()
+    {
+        CambiarPanel(3);
+    }
+
+    public void AbrirShop()
+    {
+        CambiarPanel(4);
+    }
+
+    // Alias por compatibilidad con el botón anterior.
+    public void VolverPrincipal()
+    {
+        AbrirMenuPrincipal();
     }
 
     public void AbrirCompras()
     {
-        CambiarPanel(panelCompras, grupoCompras);
+        AbrirShop();
     }
 
-    // BOTÓN PARA VOLVER AL PANEL PRINCIPAL
+    // =========================================================
+    // TRANSICIÓN ENTRE PANELES
+    // =========================================================
 
-    public void VolverPrincipal()
+    private void CambiarPanel(int nuevoIndice)
     {
-        CambiarPanel(panelPrincipal, grupoPrincipal);
-    }
-
-    // TRANSICIÓN GENERAL
-
-    private void CambiarPanel(RectTransform nuevoPanel, CanvasGroup nuevoGrupo)
-    {
-        if (!preparado || enTransicion || panelActual == nuevoPanel)
+        if (!preparado ||
+            enTransicion ||
+            nuevoIndice < 0 ||
+            nuevoIndice >= elementosMenu.Length ||
+            nuevoIndice == indicePanelActual)
+        {
             return;
+        }
 
         enTransicion = true;
 
+        // Actualizar los iconos del menú.
+        ActualizarIconosMenu(nuevoIndice, true);
+
+        RectTransform panelSalida =
+            elementosMenu[indicePanelActual].panel;
+
+        RectTransform panelEntrada =
+            elementosMenu[nuevoIndice].panel;
+
+        CanvasGroup grupoSalida =
+            gruposPaneles[indicePanelActual];
+
+        CanvasGroup grupoEntrada =
+            gruposPaneles[nuevoIndice];
+
         float altura = canvas.rect.height;
 
-        RectTransform salida = panelActual;
-        RectTransform entrada = nuevoPanel;
-
-        CanvasGroup grupoSalida = grupoActual;
-        CanvasGroup grupoEntrada = nuevoGrupo;
+        // Si el destino está por encima, el panel sale hacia arriba.
+        // Si el destino está por debajo, el panel sale hacia abajo.
+        float desplazamientoY =
+            nuevoIndice < indicePanelActual ? -altura : altura;
 
         // Activar el panel de entrada.
-        entrada.gameObject.SetActive(true);
+        panelEntrada.gameObject.SetActive(true);
+
+        // Evitar que queden animaciones antiguas.
+        LeanTween.cancel(panelSalida.gameObject);
+        LeanTween.cancel(panelEntrada.gameObject);
 
         // Posiciones iniciales.
-        salida.anchoredPosition = Vector2.zero;
+        panelSalida.anchoredPosition = Vector2.zero;
 
-        entrada.anchoredPosition = Vector2.down * altura;
+        panelEntrada.anchoredPosition =
+            Vector2.up * -desplazamientoY;
 
-        // Bloquear interacciones durante la animación.
+        // Bloquear interacciones durante la transición.
         grupoSalida.interactable = false;
         grupoSalida.blocksRaycasts = false;
 
         grupoEntrada.interactable = false;
         grupoEntrada.blocksRaycasts = false;
 
-        // Animar salida.
-        LeanTween.moveY(salida, altura, duracion)
-            .setEase(LeanTweenType.easeInOutCubic)
-            .setIgnoreTimeScale(true);
+        // Animar la salida del panel actual.
+        LeanTween.moveY(
+            panelSalida,
+            desplazamientoY,
+            duracionTransicion
+        )
+        .setEase(LeanTweenType.easeInOutCubic)
+        .setIgnoreTimeScale(true);
 
-        // Animar entrada.
-        LeanTween.moveY(entrada, 0f, duracion)
-            .setEase(LeanTweenType.easeInOutCubic)
-            .setIgnoreTimeScale(true)
-            .setOnComplete(() =>
-            {
-                // Desactivar el panel anterior.
-                salida.gameObject.SetActive(false);
+        // Animar la entrada del nuevo panel.
+        LeanTween.moveY(
+            panelEntrada,
+            0f,
+            duracionTransicion
+        )
+        .setEase(LeanTweenType.easeInOutCubic)
+        .setIgnoreTimeScale(true)
+        .setOnComplete(() =>
+        {
+            // Desactivar el panel anterior.
+            panelSalida.gameObject.SetActive(false);
+            panelSalida.anchoredPosition = Vector2.zero;
 
-                entrada.anchoredPosition = Vector2.zero;
+            // Colocar el nuevo panel correctamente.
+            panelEntrada.anchoredPosition = Vector2.zero;
 
-                // Actualizar panel actual.
-                panelActual = entrada;
-                grupoActual = grupoEntrada;
+            // Actualizar el panel actual.
+            indicePanelActual = nuevoIndice;
 
-                // Activar interacciones del nuevo panel.
-                grupoEntrada.interactable = true;
-                grupoEntrada.blocksRaycasts = true;
+            // Reactivar las interacciones.
+            grupoEntrada.interactable = true;
+            grupoEntrada.blocksRaycasts = true;
 
-                enTransicion = false;
-            });
+            enTransicion = false;
+        });
     }
 
-    // PREPARAR CANVAS GROUP
+    // =========================================================
+    // ANIMACIÓN DE LOS ICONOS SELECCIONADOS
+    // =========================================================
 
-    private CanvasGroup PrepararGrupo(RectTransform contenedor)
+    private void ActualizarIconosMenu(int indiceSeleccionado, bool animar)
     {
-        CanvasGroup grupo = contenedor.GetComponent<CanvasGroup>();
+        for (int i = 0; i < elementosMenu.Length; i++)
+        {
+            ElementoMenu elemento = elementosMenu[i];
+
+            RectTransform iconoSeleccionado =
+                elemento.iconoSeleccionado;
+
+            GameObject iconoNoSeleccionado =
+                elemento.iconoNoSeleccionado;
+
+            // Cancelar cualquier animación anterior.
+            LeanTween.cancel(iconoSeleccionado.gameObject);
+
+            // Recuperar la posición original.
+            iconoSeleccionado.anchoredPosition =
+                posicionesBaseIconos[i];
+
+            if (i == indiceSeleccionado)
+            {
+                // Mostrar el icono seleccionado.
+                iconoSeleccionado.gameObject.SetActive(true);
+                iconoNoSeleccionado.SetActive(false);
+
+                if (animar)
+                {
+                    // Desplazamiento hacia la derecha.
+                    float posicionFinal =
+                        posicionesBaseIconos[i].x +
+                        desplazamientoSeleccionado;
+
+                    LeanTween.moveX(
+                        iconoSeleccionado,
+                        posicionFinal,
+                        duracionSeleccion
+                    )
+                    .setEase(LeanTweenType.easeOutCubic)
+                    .setIgnoreTimeScale(true);
+                }
+                else
+                {
+                    // Posición inicial del menú.
+                    iconoSeleccionado.anchoredPosition +=
+                        Vector2.right * desplazamientoSeleccionado;
+                }
+            }
+            else
+            {
+                // Mostrar el icono no seleccionado.
+                iconoSeleccionado.gameObject.SetActive(false);
+                iconoNoSeleccionado.SetActive(true);
+            }
+        }
+    }
+
+    // =========================================================
+    // PREPARAR CANVAS GROUP DE LOS PANELES
+    // =========================================================
+
+    private CanvasGroup PrepararGrupo(RectTransform panel)
+    {
+        CanvasGroup grupo = panel.GetComponent<CanvasGroup>();
 
         if (grupo == null)
-            grupo = contenedor.gameObject.AddComponent<CanvasGroup>();
+        {
+            grupo = panel.gameObject.AddComponent<CanvasGroup>();
+        }
 
         grupo.alpha = 1f;
         grupo.interactable = false;
@@ -190,15 +407,146 @@ public class TransicionPaneles : MonoBehaviour
         return grupo;
     }
 
+    // =========================================================
+    // PREPARAR POP-UPS
+    // =========================================================
+
+    private CanvasGroup PrepararPopup(GameObject popup)
+    {
+        if (popup == null)
+            return null;
+
+        CanvasGroup grupo = popup.GetComponent<CanvasGroup>();
+
+        if (grupo == null)
+        {
+            grupo = popup.AddComponent<CanvasGroup>();
+        }
+
+        popup.SetActive(false);
+
+        grupo.alpha = 0f;
+        grupo.interactable = false;
+        grupo.blocksRaycasts = false;
+
+        return grupo;
+    }
+
+    // =========================================================
+    // ABRIR POP-UPS
+    // =========================================================
+
+    private void MostrarPopup(GameObject popup, CanvasGroup grupo)
+    {
+        if (popup == null || grupo == null)
+        {
+            Debug.LogWarning("No se ha asignado correctamente el pop-up.", this);
+            return;
+        }
+
+        LeanTween.cancel(popup);
+
+        popup.SetActive(true);
+
+        RectTransform rect = popup.GetComponent<RectTransform>();
+
+        // Estado inicial.
+        grupo.alpha = 0f;
+        grupo.interactable = false;
+        grupo.blocksRaycasts = true;
+
+        rect.localScale = Vector3.one * escalaInicialPopup;
+
+        // Animación de aparición.
+        LeanTween.alphaCanvas(grupo, 1f, duracionPopup)
+            .setEase(LeanTweenType.easeOutCubic)
+            .setIgnoreTimeScale(true);
+
+        LeanTween.scale(rect, Vector3.one, duracionPopup)
+            .setEase(animacionPopup)
+            .setIgnoreTimeScale(true)
+            .setOnComplete(() =>
+            {
+                grupo.interactable = true;
+                grupo.blocksRaycasts = true;
+            });
+    }
+
+    public void AbrirPerfil()
+    {
+        MostrarPopup(popupPerfil, grupoPopupPerfil);
+    }
+
+    public void AbrirRanking()
+    {
+        MostrarPopup(popupRanking, grupoPopupRanking);
+        rankingUI.UpdateRanking();
+    }
+
     public void AbrirAjustes()
     {
-        ajustes.SetActive(true);
+        MostrarPopup(popupAjustes, grupoPopupAjustes);
+    }
+
+    // =========================================================
+    // CERRAR POP-UPS
+    // =========================================================
+
+    private void OcultarPopup(GameObject popup, CanvasGroup grupo)
+    {
+        if (popup == null || grupo == null)
+            return;
+
+        if (!popup.activeSelf)
+            return;
+
+        LeanTween.cancel(popup);
+
+        RectTransform rect = popup.GetComponent<RectTransform>();
+
+        grupo.interactable = false;
+        grupo.blocksRaycasts = true;
+
+        // Reducir y desvanecer.
+        LeanTween.alphaCanvas(grupo, 0f, duracionPopup)
+            .setEase(LeanTweenType.easeInOutCubic)
+            .setIgnoreTimeScale(true);
+
+        LeanTween.scale(
+            rect,
+            Vector3.one * escalaInicialPopup,
+            duracionPopup
+        )
+        .setEase(LeanTweenType.easeInBack)
+        .setIgnoreTimeScale(true)
+        .setOnComplete(() =>
+        {
+            popup.SetActive(false);
+
+            grupo.alpha = 0f;
+            grupo.interactable = false;
+            grupo.blocksRaycasts = false;
+
+            // Recuperar la escala original.
+            rect.localScale = Vector3.one;
+        });
+    }
+
+    public void CerrarPerfil()
+    {
+        OcultarPopup(popupPerfil, grupoPopupPerfil);
+    }
+
+    public void CerrarRanking()
+    {
+        OcultarPopup(popupRanking, grupoPopupRanking);
     }
 
     public void CerrarAjustes()
     {
-        ajustes.SetActive(false);
+        OcultarPopup(popupAjustes, grupoPopupAjustes);
     }
 }
+
 
 

@@ -25,9 +25,13 @@ public class RankingManager : MonoBehaviour
         public string message;
     }
 
+    public string CurrentPlayerName { get; private set; }
+
     // ENVIAR PUNTUACIÓN
     public void SaveScore(string playerName, float score)
     {
+        CurrentPlayerName = playerName;
+
         StartCoroutine(SaveScoreCoroutine(playerName, score));
     }
 
