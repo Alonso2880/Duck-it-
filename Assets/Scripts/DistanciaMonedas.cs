@@ -11,14 +11,25 @@ public class DistanciaMonedas : MonoBehaviour
 
     [HideInInspector] public float recordDistancia = 0;
 
-    [Header("Referencias")]
-    [SerializeField] private TMP_Text textoMonedas;
+    [Header("Textos Monedas")]
+    [SerializeField] private TMP_Text textoMonedasMainMenu;
+    [SerializeField] private TMP_Text textoMonedasShop;
+    [SerializeField] private TMP_Text textoMonedasMissions;
+
+
+    [Header("Textos distancia")]
     [SerializeField] private TMP_Text textoDistancia;
 
     public void ActualizarMonedas()
     {
-        if (textoMonedas != null)
-            textoMonedas.text = "Coins: " + monedas;
+        if (textoMonedasMainMenu != null)
+            textoMonedasMainMenu.text = "Coins: " + monedas;
+
+        if (textoMonedasShop != null)
+            textoMonedasShop.text = "Coins: " + monedas;
+
+        if (textoMonedasMissions != null)
+            textoMonedasMissions.text = "Coins: " + monedas;
     }
 
     public void ActualizarDistancia()
