@@ -26,6 +26,8 @@ public class CanvasMuerte : MonoBehaviour
     public GameObject canvasMuerteAnuncio;
     public GameObject canvasMuerteAnuncioPrimero;
     public GameObject canvasMuerteAnuncioSegundo;
+    public GameObject canvasMuerteNormal;
+    public GameObject CanvasMuerteRecord;
 
     public GameObject BarraLateral;
 
@@ -101,7 +103,10 @@ public class CanvasMuerte : MonoBehaviour
             dm.recordDistancia = dm.distancia;
             textoRecordDistancia.text = dm.recordDistancia.ToString("F1");
         }
+
         DM.SetActive(false);
+        CanvasMuerteRecord.SetActive(false);
+        canvasMuerteNormal.SetActive(false);
         BarraLateral.SetActive(true);
 
         //Efectos pato

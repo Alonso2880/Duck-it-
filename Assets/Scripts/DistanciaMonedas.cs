@@ -17,6 +17,8 @@ public class DistanciaMonedas : MonoBehaviour
     [SerializeField] private TMP_Text textoMonedasShop;
     [SerializeField] private TMP_Text textoMonedasMissions;
 
+    [SerializeField] private TMP_Text textoMonedasGameOver;
+
 
     [Header("Textos distancia")]
     [SerializeField] private TMP_Text textoDistancia;
@@ -35,12 +37,15 @@ public class DistanciaMonedas : MonoBehaviour
 
         if (textoMonedasMissions != null)
             textoMonedasMissions.text = monedas.ToString();
+
+        if (textoMonedasGameOver != null)
+            textoMonedasGameOver.text = monedas.ToString();
     }
 
     public void ActualizarDistancia()
     {
         if (textoDistancia != null)
-            textoDistancia.text = distancia.ToString("F1") + " m";
+            textoDistancia.text = distancia.ToString("F1");
     }
 
     public void ActualizarNombre()
