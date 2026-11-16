@@ -17,6 +17,7 @@ public class MissionProgress
     public bool mediumJumpDone;
     public bool maxJumpDone;
 
+    public long replacementAvailableAtUnix;
     public MissionProgress(string id)
     {
         missionID = id;

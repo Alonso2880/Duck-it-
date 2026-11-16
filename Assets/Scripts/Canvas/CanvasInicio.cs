@@ -38,7 +38,7 @@ public class CanvasInicio : MonoBehaviour
 
         Time.timeScale = 1f;
         CI.SetActive(false);
-        DM.SetActive(true);
+        //DM.SetActive(true);
 
         canvasMuerte.StartCoroutine(canvasMuerte.CountDown(control));
 

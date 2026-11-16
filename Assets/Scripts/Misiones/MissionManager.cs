@@ -70,6 +70,8 @@ public class MissionManager : MonoBehaviour
         UpdateDistance();
         UpdateCoins();
 
+        CheckMissionReplacements();
+
         // Referencia al tiempo de Slowmo aquí.
     }
 
@@ -89,7 +91,7 @@ public class MissionManager : MonoBehaviour
         }
     }
 
-    private void AddRandomMission()
+    private void AddRandomMission(string excludedMissionID = null)
     {
         List<MissionData> availableMissions =
             new List<MissionData>();
@@ -104,6 +106,8 @@ public class MissionManager : MonoBehaviour
 
             if (claimedMissionIDs.Contains(mission.missionID))
                 continue;
+            if (mission.missionID == excludedMissionID)
+                continue;
 
             availableMissions.Add(mission);
         }
@@ -117,6 +121,8 @@ public class MissionManager : MonoBehaviour
             foreach (MissionData mission in allMissions)
             {
                 if (mission == null)
+                    continue;
+                if (mission.missionID == excludedMissionID)
                     continue;
 
                 if (!activeMissionIDs.Contains(mission.missionID))
@@ -207,6 +213,8 @@ public class MissionManager : MonoBehaviour
         {
             progress.currentProgress = data.targetValue;
             progress.completed = true;
+
+            progress.replacementAvailableAtUnix = DateTimeOffset.UtcNow.ToUnixTimeSeconds() + 3600;
 
             foreach (GameObject obj in notificationObjects)
             {
@@ -510,16 +518,13 @@ public class MissionManager : MonoBehaviour
         // Referencia a monedas aquí.
         OnRewardClaimed?.Invoke(data.rewardCoins);
 
-        activeMissionIDs.Remove(missionID);
-        missionProgress.Remove(progress);
-
-        AddRandomMission();
-
-        bool pendingRewards = missionProgress.Exists(p => p.completed && !p.claimed);
-
-        foreach (GameObject obj in notificationObjects)
+        // Solo sustituir si ya ha terminado la hora.
+        if (GetRemainingSeconds(missionID) <= 0)
         {
-            obj.SetActive(pendingRewards);
+            activeMissionIDs.Remove(missionID);
+            missionProgress.Remove(progress);
+
+            AddRandomMission();
         }
 
         OnMissionUpdated?.Invoke();
@@ -586,6 +591,67 @@ public class MissionManager : MonoBehaviour
             lastDistance = 0;
             lastCoins = 0;
         }
+    }
+
+    public long GetRemainingSeconds(string missionID)
+    {
+        MissionProgress progress = GetMissionProgress(missionID);
+
+        if (progress == null || progress.replacementAvailableAtUnix == 0)
+            return 0;
+
+        long remaining = progress.replacementAvailableAtUnix -
+            DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+
+        return remaining > 0 ? remaining : 0;
+    }
+
+    private void CheckMissionReplacements()
+    {
+        bool changed = false;
+
+        for (int i = missionProgress.Count - 1; i >= 0; i--)
+        {
+            MissionProgress progress = missionProgress[i];
+
+            if (!progress.completed || !progress.claimed)
+                continue;
+
+            if (GetRemainingSeconds(progress.missionID) <= 0)
+            {
+                string oldID = progress.missionID;
+
+                activeMissionIDs.Remove(oldID);
+                missionProgress.RemoveAt(i);
+
+                AddRandomMission(oldID);
+
+                changed = true;
+            }
+        }
+
+        if (changed)
+        {
+            //SaveGame();
+            OnMissionUpdated?.Invoke();
+        }
+    }
+
+    public bool ChangeMission(string missionID)
+    {
+        MissionProgress progress = GetMissionProgress(missionID);
+
+        if (progress == null || progress.completed || progress.claimed)
+            return false;
+
+        activeMissionIDs.Remove(missionID);
+        missionProgress.Remove(progress);
+
+        AddRandomMission(missionID);
+
+        OnMissionUpdated?.Invoke();
+
+        return true;
     }
 
     #endregion
