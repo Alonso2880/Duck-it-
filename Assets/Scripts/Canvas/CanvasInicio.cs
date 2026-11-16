@@ -10,6 +10,8 @@ public class CanvasInicio : MonoBehaviour
 
     public CanvasMuerte canvasMuerte;
 
+    public GameObject BarraLateral;
+
     [Header("Audio")]
     public AudioSource audioClick;
     public AudioSource audioMenu;
@@ -38,7 +40,8 @@ public class CanvasInicio : MonoBehaviour
 
         Time.timeScale = 1f;
         CI.SetActive(false);
-        //DM.SetActive(true);
+        DM.SetActive(true);
+        BarraLateral.SetActive(false);
 
         DistanciaMonedas dm = DM.GetComponent<DistanciaMonedas>();
         dm.ActualizarNombre();

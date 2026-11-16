@@ -27,6 +27,8 @@ public class CanvasMuerte : MonoBehaviour
     public GameObject canvasMuerteAnuncioPrimero;
     public GameObject canvasMuerteAnuncioSegundo;
 
+    public GameObject BarraLateral;
+
     [Header("CountDown")]
     public GameObject uno;
     public GameObject dos;
@@ -99,6 +101,8 @@ public class CanvasMuerte : MonoBehaviour
             dm.recordDistancia = dm.distancia;
             textoRecordDistancia.text = dm.recordDistancia.ToString("F1");
         }
+        DM.SetActive(false);
+        BarraLateral.SetActive(true);
 
         //Efectos pato
         Splash.SetActive(false);
