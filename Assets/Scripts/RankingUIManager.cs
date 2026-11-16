@@ -25,9 +25,16 @@ public class RankingUIManager : MonoBehaviour
     public TMP_Text playerNameText;
     public TMP_Text playerScoreText;
 
-    private void Start()
+    private void OnEnable()
     {
-        UpdateRanking();
+        if (rankingManager != null)
+            rankingManager.OnScoreSaved += UpdateRanking;
+    }
+
+    private void OnDisable()
+    {
+        if (rankingManager != null)
+            rankingManager.OnScoreSaved -= UpdateRanking;
     }
 
     public void UpdateRanking()
@@ -37,35 +44,25 @@ public class RankingUIManager : MonoBehaviour
 
     private void DisplayRanking(List<RankingManager.RankingEntry> ranking)
     {
-        if (ranking == null || ranking.Count == 0)
+        if (ranking == null)
         {
             Debug.LogError("No se pudo cargar el ranking.");
-
             return;
         }
 
+        Debug.Log("Ranking recibido: " + ranking.Count + " jugadores.");
+        Debug.Log("Jugador actual: " + rankingManager.CurrentPlayerName);
+
         // PRIMER PUESTO
-        SetPlayerData(
-            ranking, 0,
-            firstNameText,
-            firstScoreText
-        );
+        SetPlayerData(ranking, 0, firstNameText, firstScoreText);
 
         // SEGUNDO PUESTO
-        SetPlayerData(
-            ranking, 1,
-            secondNameText,
-            secondScoreText
-        );
+        SetPlayerData(ranking, 1, secondNameText, secondScoreText);
 
         // TERCER PUESTO
-        SetPlayerData(
-            ranking, 2,
-            thirdNameText,
-            thirdScoreText
-        );
+        SetPlayerData(ranking, 2, thirdNameText, thirdScoreText);
 
-        // BUSCAR AL JUGADOR ACTUAL
+        // BUSCAR JUGADOR ACTUAL
         string currentName = rankingManager.CurrentPlayerName;
 
         int playerIndex = -1;
@@ -81,6 +78,26 @@ public class RankingUIManager : MonoBehaviour
                 )
             );
         }
+
+        Debug.Log("Índice del jugador: " + playerIndex);
+
+        // MOSTRAR DATOS DEL JUGADOR ACTUAL
+        if (playerIndex != -1)
+        {
+            var player = ranking[playerIndex];
+
+            playerPositionText.text = (playerIndex + 1) + "º";
+            playerNameText.text = player.name;
+            playerScoreText.text = player.score.ToString("0.##");
+
+            Debug.Log("Jugador mostrado: " + player.name);
+        }
+        else
+        {
+            playerPositionText.text = "-";
+            playerNameText.text = currentName;
+            playerScoreText.text = "0";
+        }
     }
 
     private void SetPlayerData(
@@ -89,7 +106,7 @@ public class RankingUIManager : MonoBehaviour
         TMP_Text nameText,
         TMP_Text scoreText)
     {
-        if (index < ranking.Count)
+        if (index < ranking.Count && ranking[index] != null)
         {
             nameText.text = ranking[index].name;
             scoreText.text = ranking[index].score.ToString("0.##");

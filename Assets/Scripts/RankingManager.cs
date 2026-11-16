@@ -27,6 +27,8 @@ public class RankingManager : MonoBehaviour
 
     public string CurrentPlayerName { get; private set; }
 
+    public event Action OnScoreSaved;
+
     // ENVIAR PUNTUACIÓN
     public void SaveScore(string playerName, float score)
     {
@@ -35,23 +37,23 @@ public class RankingManager : MonoBehaviour
         StartCoroutine(SaveScoreCoroutine(playerName, score));
     }
 
-    private IEnumerator SaveScoreCoroutine(
-        string playerName, float score)
+    private IEnumerator SaveScoreCoroutine(string playerName, float score)
     {
         WWWForm form = new WWWForm();
 
         form.AddField("name", playerName);
-        form.AddField("score",score.ToString(System.Globalization.CultureInfo.InvariantCulture)
-);
+        form.AddField("score", score.ToString(CultureInfo.InvariantCulture));
 
-        using (UnityWebRequest request =
-            UnityWebRequest.Post(URL, form))
+        using (UnityWebRequest request = UnityWebRequest.Post(URL, form))
         {
             yield return request.SendWebRequest();
 
             if (request.result == UnityWebRequest.Result.Success)
             {
-                Debug.Log("Respuesta: " + request.downloadHandler.text);
+                Debug.Log("Puntuación guardada: " + request.downloadHandler.text);
+
+                OnScoreSaved?.Invoke();
+                
             }
             else
             {
