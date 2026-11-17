@@ -190,6 +190,11 @@ public class Detectar : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         other.gameObject.GetComponent<ObjetosReiniciables>().Recoger();
+
+        particulas.SetActive(false);
+        animatorObjeto.SetBool("Cogido", false);
+        animatorParticula.SetBool("Cogido", false);
+
         particulas = null;
         animatorObjeto = null;
         animatorParticula = null;
