@@ -72,10 +72,12 @@ public class Detectar : MonoBehaviour
         if (other.gameObject.tag == "Coin")
         {
             DistanciaMonedas dm = DM.GetComponent<DistanciaMonedas>();
-            other.gameObject.GetComponent<ObjetosReiniciables>().Recoger();
+            
             dm.monedas++;
             dm.MonedasTotalPartida++;
             dm.ActualizarMonedas();
+
+            StartCoroutine(ActivarAnimaciones(other.gameObject));
 
             MissionManager.Instance?.SetGeneralCoins(dm.MonedasTotalPartida);
 
@@ -94,7 +96,7 @@ public class Detectar : MonoBehaviour
         {
             boostAct = 1;
             MissionManager.Instance?.NotifyBoosterCollected();
-            other.gameObject.GetComponent<ObjetosReiniciables>().Recoger();
+            StartCoroutine(ActivarAnimaciones(other.gameObject));
             StartCoroutine(boostTiempo());
         }
 
@@ -102,7 +104,7 @@ public class Detectar : MonoBehaviour
         {
             boostAct = 2;
             MissionManager.Instance?.NotifyBoosterCollected();
-            other.gameObject.GetComponent<ObjetosReiniciables>().Recoger();
+            StartCoroutine(ActivarAnimaciones(other.gameObject));
             StartCoroutine(boostTiempo());
         }
 
@@ -115,7 +117,7 @@ public class Detectar : MonoBehaviour
 
             controlador.ActivarBoostLento();
 
-            other.gameObject.GetComponent<ObjetosReiniciables>().Recoger();
+            StartCoroutine(ActivarAnimaciones(other.gameObject));
         }
 
         //Si colisiona con el borde
@@ -172,5 +174,24 @@ public class Detectar : MonoBehaviour
                    boostAct == 2 ||
                    (control != null && control.BoostLentoActivo);
         }
+    }
+
+    IEnumerator ActivarAnimaciones(GameObject other)
+    {
+        GameObject particulas = other.transform.GetChild(1).gameObject; //Accedo al objeto particulas
+        Animator animatorObjeto = other.GetComponent<Animator>(); //Animator del objeto principal
+        Animator animatorParticula = particulas.GetComponent<Animator>(); //Animator particulas
+
+        particulas.SetActive(true);
+
+        animatorObjeto.SetBool("Cogido", true);
+        animatorParticula.SetBool("Cogido", true);
+
+        yield return new WaitForSeconds(1.5f);
+
+        other.gameObject.GetComponent<ObjetosReiniciables>().Recoger();
+        particulas = null;
+        animatorObjeto = null;
+        animatorParticula = null;
     }
 }
