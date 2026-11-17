@@ -1779,6 +1779,14 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8739151794638502923, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
+      propertyPath: m_Size.x
+      value: 10.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 8739151794638502923, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
+      propertyPath: m_Size.y
+      value: 20.48
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
