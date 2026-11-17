@@ -12549,6 +12549,7 @@ MonoBehaviour:
   thirdNameText: {fileID: 693539221}
   thirdScoreText: {fileID: 1789848946}
   playerPositionText: {fileID: 1064764429}
+  playerPositionTextMainMenu: {fileID: 1697084298}
   playerNameText: {fileID: 1026247999}
   playerScoreText: {fileID: 1357292065}
   deathFirstNameText: {fileID: 1843337462}
@@ -17837,6 +17838,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CanvasMuerte
   Spawn: {fileID: 680428909}
   DM: {fileID: 1712035289}
+  DMObjeto: {fileID: 1909105621}
   mapin: {fileID: 1445098435}
   pato: {fileID: 12347340}
   control: {fileID: 12347344}

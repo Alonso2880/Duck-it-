@@ -9,6 +9,7 @@ public class CanvasMuerte : MonoBehaviour
 
     [Header("Referencias")]
     public GameObject DM;
+    public GameObject DMObjeto;
     public MapaInfinito mapin;
     public GameObject pato;
 
@@ -108,6 +109,7 @@ public class CanvasMuerte : MonoBehaviour
         CanvasMuerteRecord.SetActive(false);
         canvasMuerteNormal.SetActive(false);
         BarraLateral.SetActive(true);
+        DMObjeto.SetActive(true);
 
         //Efectos pato
         Splash.SetActive(false);

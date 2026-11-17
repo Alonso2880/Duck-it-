@@ -21,6 +21,7 @@ public class RankingUIManager : MonoBehaviour
 
     [Header("JUGADOR ACTUAL")]
     public TMP_Text playerPositionText;
+    public TMP_Text playerPositionTextMainMenu;
     public TMP_Text playerNameText;
     public TMP_Text playerScoreText;
 
@@ -114,6 +115,8 @@ public class RankingUIManager : MonoBehaviour
             deathPlayerNameText.text = player.name;
             deathPlayerScoreText.text = player.score.ToString("0.##");
 
+            playerPositionTextMainMenu.text = (playerIndex + 1) + "º";
+
             Debug.Log("Jugador mostrado: " + player.name);
         }
         else
@@ -125,6 +128,9 @@ public class RankingUIManager : MonoBehaviour
             deathPlayerPositionText.text = "-";
             deathPlayerNameText.text = currentName;
             deathPlayerScoreText.text = "0";
+
+            playerPositionTextMainMenu.text = "-";
+
         }
     }
 
