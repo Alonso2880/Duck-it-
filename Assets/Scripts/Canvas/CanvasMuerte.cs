@@ -16,9 +16,9 @@ public class CanvasMuerte : MonoBehaviour
 
     public CheckPoints check;
 
-    public EnviarRanking enviar;
+    /*public EnviarRanking enviar;
 
-    public RankingUIManager rankingUI;
+    public RankingUIManager rankingUI;*/
 
     [Header("Canvas")]
     public GameObject CanvIn;
@@ -114,8 +114,8 @@ public class CanvasMuerte : MonoBehaviour
         Animator animatorSplash = Splash.GetComponent<Animator>();
         animatorSplash.SetBool("Death", false);
 
-        enviar.SubmitScore(dm.distancia);
-        rankingUI.UpdateRanking();
+        //enviar.SubmitScore(dm.distancia);
+        //rankingUI.UpdateRanking();
     }
 
     //Funcion que permite revivir tras el ultimo checkpoint si tienes 10 monedas

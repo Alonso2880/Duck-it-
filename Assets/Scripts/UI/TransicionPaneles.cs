@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 public class TransicionPaneles : MonoBehaviour
@@ -39,6 +38,7 @@ public class TransicionPaneles : MonoBehaviour
     [SerializeField] private GameObject popupPerfil;
     [SerializeField] private GameObject popupRanking;
     [SerializeField] private GameObject popupAjustes;
+    [SerializeField] private GameObject popupRankingGameover;
 
     [Header("Animación de los pop-ups")]
     [SerializeField, Min(0.05f)] private float duracionPopup = 0.2f;
@@ -62,6 +62,8 @@ public class TransicionPaneles : MonoBehaviour
 
     private bool preparado;
     private bool enTransicion;
+
+    private CanvasGroup grupoPopupRankingGameover;
 
     [Header("Escala de los pop-ups")]
     [SerializeField, Range(0.1f, 1f)]
@@ -112,6 +114,7 @@ public class TransicionPaneles : MonoBehaviour
         grupoPopupPerfil = PrepararPopup(popupPerfil);
         grupoPopupRanking = PrepararPopup(popupRanking);
         grupoPopupAjustes = PrepararPopup(popupAjustes);
+        grupoPopupRankingGameover = PrepararPopup(popupRankingGameover);
 
         indicePanelActual = INDICE_MENU_PRINCIPAL;
 
@@ -436,6 +439,11 @@ public class TransicionPaneles : MonoBehaviour
     // ABRIR POP-UPS
     // =========================================================
 
+    public void AbrirRankingGameover()
+    {
+        MostrarPopup(popupRankingGameover, grupoPopupRankingGameover);
+    }
+
     private void MostrarPopup(GameObject popup, CanvasGroup grupo)
     {
         if (popup == null || grupo == null)
@@ -492,6 +500,10 @@ public class TransicionPaneles : MonoBehaviour
     // CERRAR POP-UPS
     // =========================================================
 
+    public void CerrarRankingGameover()
+    {
+        OcultarPopup(popupRankingGameover, grupoPopupRankingGameover);
+    }
     private void OcultarPopup(GameObject popup, CanvasGroup grupo)
     {
         if (popup == null || grupo == null)

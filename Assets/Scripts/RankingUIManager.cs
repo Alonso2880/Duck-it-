@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using TMPro;
 using System.Collections.Generic;
@@ -24,6 +23,20 @@ public class RankingUIManager : MonoBehaviour
     public TMP_Text playerPositionText;
     public TMP_Text playerNameText;
     public TMP_Text playerScoreText;
+
+    [Header("RANKING POPUP DE MUERTE")]
+    public TMP_Text deathFirstNameText;
+    public TMP_Text deathFirstScoreText;
+
+    public TMP_Text deathSecondNameText;
+    public TMP_Text deathSecondScoreText;
+
+    public TMP_Text deathThirdNameText;
+    public TMP_Text deathThirdScoreText;
+
+    public TMP_Text deathPlayerPositionText;
+    public TMP_Text deathPlayerNameText;
+    public TMP_Text deathPlayerScoreText;
 
     private void OnEnable()
     {
@@ -67,6 +80,13 @@ public class RankingUIManager : MonoBehaviour
 
         int playerIndex = -1;
 
+        // RANKING POPUP DE MUERTE
+        SetPlayerData(ranking, 0, deathFirstNameText, deathFirstScoreText);
+
+        SetPlayerData(ranking, 1, deathSecondNameText, deathSecondScoreText);
+
+        SetPlayerData(ranking, 2, deathThirdNameText, deathThirdScoreText);
+
         if (!string.IsNullOrWhiteSpace(currentName))
         {
             playerIndex = ranking.FindIndex(p =>
@@ -90,6 +110,10 @@ public class RankingUIManager : MonoBehaviour
             playerNameText.text = player.name;
             playerScoreText.text = player.score.ToString("0.##");
 
+            deathPlayerPositionText.text = (playerIndex + 1) + "º";
+            deathPlayerNameText.text = player.name;
+            deathPlayerScoreText.text = player.score.ToString("0.##");
+
             Debug.Log("Jugador mostrado: " + player.name);
         }
         else
@@ -97,6 +121,10 @@ public class RankingUIManager : MonoBehaviour
             playerPositionText.text = "-";
             playerNameText.text = currentName;
             playerScoreText.text = "0";
+
+            deathPlayerPositionText.text = "-";
+            deathPlayerNameText.text = currentName;
+            deathPlayerScoreText.text = "0";
         }
     }
 

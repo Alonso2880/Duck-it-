@@ -17,6 +17,11 @@ public class Muerte : MonoBehaviour
 
     public DistanciaMonedas DM;
 
+    [Header("Ranking")]
+    public EnviarRanking enviar;
+
+    public RankingUIManager rankingUI;
+
 
     public void Death()
     {
@@ -25,6 +30,8 @@ public class Muerte : MonoBehaviour
         float probabilidad = Random.value;
 
         DM.ActualizarMonedas();
+        enviar.SubmitScore(DM.distancia);
+        rankingUI.UpdateRanking();
 
         if (HaHechoRecord())
         {
