@@ -105,11 +105,11 @@ public class CanvasMuerte : MonoBehaviour
             textoRecordDistancia.text = dm.recordDistancia.ToString("F1");
         }
 
-        DM.SetActive(false);
+        //DM.SetActive(false);
         CanvasMuerteRecord.SetActive(false);
         canvasMuerteNormal.SetActive(false);
         BarraLateral.SetActive(true);
-        DMObjeto.SetActive(true);
+        DMObjeto.SetActive(false);
 
         //Efectos pato
         Splash.SetActive(false);

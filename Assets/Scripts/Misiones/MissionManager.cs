@@ -515,7 +515,17 @@ public class MissionManager : MonoBehaviour
 
         claimedMissionIDs.Add(missionID);
 
-        // Referencia a monedas aquí.
+        // Añadir monedas de recompensa.
+        if (distanciaMonedas != null)
+        {
+            for (int i = 0; i < data.rewardCoins; i++)
+            {
+                distanciaMonedas.monedas++;
+                distanciaMonedas.MonedasTotalPartida++;
+                distanciaMonedas.ActualizarMonedas();
+            }
+        }
+
         OnRewardClaimed?.Invoke(data.rewardCoins);
 
         // Solo sustituir si ya ha terminado la hora.
