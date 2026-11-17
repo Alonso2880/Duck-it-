@@ -44,7 +44,7 @@ public class CanvasInicio : MonoBehaviour
         BarraLateral.SetActive(false);
 
         DistanciaMonedas dm = DM.GetComponent<DistanciaMonedas>();
-        dm.ActualizarNombre();
+        //dm.ActualizarNombre();
 
         canvasMuerte.StartCoroutine(canvasMuerte.CountDown(control));
 
