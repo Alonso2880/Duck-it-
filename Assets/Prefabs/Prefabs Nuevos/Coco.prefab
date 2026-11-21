@@ -11,9 +11,10 @@ GameObject:
   - component: {fileID: 5849045248636589871}
   - component: {fileID: 5470870088784115445}
   - component: {fileID: 1202786819226163179}
+  - component: {fileID: 8796629901409008973}
   m_Layer: 0
   m_Name: CuerpoCoco
-  m_TagString: Untagged
+  m_TagString: Obstaculo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -91,6 +92,27 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8796629901409008973
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2930827421021192244}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.020053353, y: 0.043298796, z: 0.014126004}
+  m_Center: {x: 2.0134575e-26, y: 0.0084450375, z: 0.00028397198}
 --- !u!1 &7260162926431595268
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,7 +287,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
