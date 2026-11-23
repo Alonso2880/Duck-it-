@@ -78,6 +78,7 @@ public class CanvasMuerte : MonoBehaviour
         cont.ReiniciarVelocidad();
         cont.saltoActual = 0;
         mapin.ReiniciarMapa();
+        StartCoroutine(CountDown(cont));
     }
 
     //Funcion que vuelve al menu
