@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: jumps_max_10
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
   missionID: jumps_max_10
-  description: "Completa 10 saltos de altura m\xE1xima en una partida"
+  description: Complete 10 maximum-height jumps in a single match
   missionType: 7
   targetValue: 10
   rewardCoins: 3

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: coins_booster_5
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
   missionID: coins_booster_5
-  description: "Consigue 5 monedas mientras est\xE1s bajo los efectos de un potenciador activo"
+  description: Collect 5 coins while under the effects of an active power-up
   missionType: 13
   targetValue: 5
   rewardCoins: 3

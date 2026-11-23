@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: distance_500
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
   missionID: distance_500
-  description: Supera los 500 metros acumulados sumando varias partida
+  description: Surpass 500 cumulative meters by playing multiple rounds
   missionType: 1
   targetValue: 500
   rewardCoins: 1

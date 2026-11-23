@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: coins_5
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
   missionID: coins_5
-  description: Recoge 5 monedas en una sola partida
+  description: Collect 5 coins in a single game
   missionType: 3
   targetValue: 5
   rewardCoins: 3

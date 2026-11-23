@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: general_coins_50
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
   missionID: general_coins_50
-  description: Acumula 50 monedas en tu marcador general
+  description: Accumulate 50 coins in your overall score
   missionType: 4
   targetValue: 50
   rewardCoins: 3

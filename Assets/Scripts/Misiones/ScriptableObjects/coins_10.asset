@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: coins_10
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
   missionID: coins_10
-  description: Recoge 10 monedas en total
+  description: Collect 10 coins in total
   missionType: 2
   targetValue: 10
   rewardCoins: 2

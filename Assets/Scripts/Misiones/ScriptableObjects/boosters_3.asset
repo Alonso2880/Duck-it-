@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: boosters_3
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
   missionID: boosters_3
-  description: Recoge 3 boosters de cualquier tipo en una misma partida
+  description: Collect 3 boosters of any type in a single match
   missionType: 10
   targetValue: 3
   rewardCoins: 2

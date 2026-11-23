@@ -62,8 +62,13 @@ public class ControladorPato : MonoBehaviour
 
     void Update()
     {
-        //Aceleración progresiva hasta alcanzar el máximo.
-        velocidadActual = Mathf.Min( velocidadActual + aceleracion * Time.deltaTime,velocidadMaxima);
+        if (IsGrounded)
+        {
+            velocidadActual = Mathf.Min(
+                velocidadActual + aceleracion * Time.deltaTime,
+                velocidadMaxima
+            );
+        }
 
         //El boost modifica la velocidad aplicada, pero no reinicia la aceleración acumulada.
         float velocidadAplicada = boostLentoActivo? velocidad : velocidadActual;
@@ -71,15 +76,8 @@ public class ControladorPato : MonoBehaviour
         // Movimiento hacia delante
         Vector3 Velocidad = rb.linearVelocity;
 
-        // Limitar la velocidad horizontal mientras está en el aire
-        if (!IsGrounded)
-        {
-            Velocidad.x = Mathf.Min(velocidadAplicada, velocidadMaximaEnSalto);
-        }
-        else
-        {
-            Velocidad.x = velocidadAplicada;
-        }
+        // Mantener la misma velocidad horizontal en el suelo y en el aire
+        Velocidad.x = velocidadAplicada;
 
         rb.linearVelocity = Velocidad;
 

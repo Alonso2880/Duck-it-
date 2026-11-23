@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: jumps_all_types
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
   missionID: jumps_all_types
-  description: Realiza al menos un salto de cada tipo en una misma partida
+  description: Perform at least one jump of each type in a single match
   missionType: 8
   targetValue: 3
   rewardCoins: 1

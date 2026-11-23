@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: distance_200
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
   missionID: distance_200
-  description: Recorre 200 metros en una sola partida
+  description: Travel 200 meters in a single game
   missionType: 0
   targetValue: 200
   rewardCoins: 2

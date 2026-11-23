@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: boosters_10
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
   missionID: boosters_10
-  description: Recoge 10 Boosters
+  description: Collect 10 Boosters
   missionType: 11
   targetValue: 10
   rewardCoins: 3

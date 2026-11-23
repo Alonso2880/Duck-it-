@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: slowmo_15
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
   missionID: slowmo_15
-  description: Sobrevive 15 segundos bajo los efectos del potenciador Slowmo
+  description: Survive for 15 seconds while under the effects of the Slowmo power-up
   missionType: 9
   targetValue: 15
   rewardCoins: 2

@@ -308,7 +308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ControladorPato
   velocidad: 8
-  aceleracion: 0.5
+  aceleracion: 1
   velocidadMaxima: 150
   duracionBoostLento: 3
   FuerzaSalto: 5
@@ -1843,6 +1843,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 194426975}
     m_Modifications:
+    - target: {fileID: 446058010456345441, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 290.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 446058010456345441, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 19.4
+      objectReference: {fileID: 0}
     - target: {fileID: 1468301745716525942, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -1855,6 +1863,14 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3146402421778927398, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 299.68
+      objectReference: {fileID: 0}
+    - target: {fileID: 3146402421778927398, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 20.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3197793251436249554, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -1862,6 +1878,10 @@ PrefabInstance:
     - target: {fileID: 4728020799255710813, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
       propertyPath: m_Name
       value: M1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5591657607142842050, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5886297908617125197, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1903,6 +1923,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6385562016540383166, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 290.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6385562016540383166, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 19
+      objectReference: {fileID: 0}
+    - target: {fileID: 6513341949602600173, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 6513341949602600173, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 303.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 6712235215215729256, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 299.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 6712235215215729256, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 19.63
+      objectReference: {fileID: 0}
     - target: {fileID: 8582364997720041270, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -1919,8 +1963,22 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 9108621153196139204, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 9108621153196139204, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 304.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 9108621153196139204, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4508798567601321099, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
+    - {fileID: 6112691146863102471, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 6543989247423700174, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
       insertIndex: 1
@@ -19191,14 +19249,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MapaInfinito
   player: {fileID: 12347346}
   mapaInicial: {fileID: 140903393}
-  mapA: {fileID: 140903393}
-  mapB: {fileID: 140903393}
+  mapA: {fileID: 4728020799255710813, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
+  mapB: {fileID: 4728020799255710813, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
   mapaFase2: {fileID: 8372761318568074985, guid: 822e3e5243ab3944684cbfca2843ccf4, type: 3}
   mapaFase3: {fileID: 4813524197058901958, guid: 9d2926dec36d1964db2fe478997ceaff, type: 3}
   dist: {fileID: 1712035291}
   DistanciaFase2: 600
   DistnaciaFase3: 900
-  segmentLength: 300
+  segmentLength: 317.93
   objetosIniciales: []
 --- !u!1 &1445123579
 GameObject:

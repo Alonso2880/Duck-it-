@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: jumps_medium_15
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
   missionID: jumps_medium_15
-  description: Realiza 15 saltos de altura media en una partida
+  description: Perform 15 medium-height jumps in a single match
   missionType: 6
   targetValue: 15
   rewardCoins: 2

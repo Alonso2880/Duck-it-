@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: distance_no_boosters
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
   missionID: distance_no_boosters
-  description: "Recorre 100 metros sin recoger ni utilizar ning\xFAn potenciador"
+  description: Travel 100 meters without collecting or using any power-ups
   missionType: 12
   targetValue: 100
   rewardCoins: 2

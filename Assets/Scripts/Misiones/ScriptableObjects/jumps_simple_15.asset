@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: jumps_simple_15
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
   missionID: jumps_simple_15
-  description: Ejecuta 15 saltos simples de forma exitosa
+  description: Successfully perform 15 single jumps
   missionType: 5
   targetValue: 15
   rewardCoins: 2

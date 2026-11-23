@@ -72,6 +72,8 @@ public class CanvasMuerte : MonoBehaviour
         control.entradaBloqueada = false;
         detectar.ResetearDistancia();
         CanvMuerte.gameObject.SetActive(false); //Apago el canvas
+        CanvasMuerteRecord.SetActive(false);
+        canvasMuerteNormal.SetActive(false);
 
         cont.ReiniciarVelocidad();
         cont.saltoActual = 0;
@@ -154,6 +156,8 @@ public class CanvasMuerte : MonoBehaviour
         canvasMuerteAnuncio.SetActive(false);
         canvasMuerteAnuncioPrimero.SetActive(true);
         canvasMuerteAnuncioSegundo.SetActive(false);
+        CanvasMuerteRecord.SetActive(false);
+        canvasMuerteNormal.SetActive(false);
 
         //Efectos pato
         Splash.SetActive(false);
@@ -192,11 +196,17 @@ public class CanvasMuerte : MonoBehaviour
     public void monedas()
     {
         DistanciaMonedas dm = DM.GetComponent<DistanciaMonedas>();
+        Debug.Log("Hola");
         if (dm.monedas >= 0)
         {
+            Debug.Log("Revivir activado");
             dm.monedas -= 0;
             dm.ActualizarMonedas();
             Revivir();
+        }
+        else
+        {
+            Debug.Log("Revivir denegado");
         }
     }
 
