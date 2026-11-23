@@ -216,7 +216,7 @@ GameObject:
   - component: {fileID: 858418349243521372}
   m_Layer: 0
   m_Name: CabezaDragon
-  m_TagString: Untagged
+  m_TagString: Obstaculo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

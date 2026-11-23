@@ -1851,6 +1851,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 19.4
       objectReference: {fileID: 0}
+    - target: {fileID: 1258377186753304728, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
+      propertyPath: m_TagString
+      value: Obstaculo
+      objectReference: {fileID: 0}
     - target: {fileID: 1468301745716525942, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -1878,6 +1882,10 @@ PrefabInstance:
     - target: {fileID: 4728020799255710813, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
       propertyPath: m_Name
       value: M1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4730503051935332600, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
+      propertyPath: m_TagString
+      value: Obstaculo
       objectReference: {fileID: 0}
     - target: {fileID: 5591657607142842050, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
       propertyPath: m_Enabled

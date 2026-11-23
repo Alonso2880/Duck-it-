@@ -178,9 +178,13 @@ public class Detectar : MonoBehaviour
 
     IEnumerator ActivarAnimaciones(GameObject other)
     {
+        GameObject objetoAnimado = other.transform.GetChild(0).gameObject; //Accedo al hijo 1
         GameObject particulas = other.transform.GetChild(1).gameObject; //Accedo al objeto particulas
         Animator animatorObjeto = other.GetComponent<Animator>(); //Animator del objeto principal
         Animator animatorParticula = particulas.GetComponent<Animator>(); //Animator particulas
+
+        // Guardar escala original
+        Vector3 escalaOriginal = objetoAnimado.transform.localScale;
 
         particulas.SetActive(true);
 
@@ -188,6 +192,9 @@ public class Detectar : MonoBehaviour
         animatorParticula.SetBool("Cogido", true);
 
         yield return new WaitForSeconds(1.5f);
+
+        // Restaurar escala del objeto animado
+        objetoAnimado.transform.localScale = escalaOriginal;
 
         other.gameObject.GetComponent<ObjetosReiniciables>().Recoger();
 
