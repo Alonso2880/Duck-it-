@@ -295,6 +295,7 @@ MonoBehaviour:
   DM: {fileID: 1712035291}
   enviar: {fileID: 964282611}
   rankingUI: {fileID: 964282613}
+  control: {fileID: 12347344}
 --- !u!114 &12347344
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2586,6 +2587,7 @@ MonoBehaviour:
   DM: {fileID: 0}
   enviar: {fileID: 0}
   rankingUI: {fileID: 0}
+  control: {fileID: 0}
 --- !u!114 &160451352
 MonoBehaviour:
   m_ObjectHideFlags: 0

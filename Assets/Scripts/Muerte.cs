@@ -22,9 +22,23 @@ public class Muerte : MonoBehaviour
 
     public RankingUIManager rankingUI;
 
+    [Header("Control del pato")]
+    public ControladorPato control;
+
 
     public void Death()
     {
+        // Bloquear inmediatamente cualquier entrada
+        control.BloquearEntrada();
+
+        // Detener completamente el movimiento
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
+
+        // Desactivar el controlador
+        control.enabled = false;
+
         Time.timeScale = 0f;
 
         float probabilidad = Random.value;

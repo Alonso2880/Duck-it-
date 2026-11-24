@@ -87,40 +87,41 @@ public class CanvasMuerte : MonoBehaviour
         audioClick.Play();
         audioJuego.Stop();
         audioMenu.Play();
-        
+
         DistanciaMonedas dm = DM.GetComponent<DistanciaMonedas>();
         ControladorPato cont = pato.GetComponent<ControladorPato>();
 
-        pato.transform.position = Spawn.transform.position; //Reseteo la posicion del pato
-        cont.saltoActual = 0; //Reseteo los saltos del pato
-        mapin.ReiniciarMapa(); //Reseteo el mapa
+        // BLOQUEAR Y DETENER COMPLETAMENTE AL PATO
+        cont.BloquearEntrada();
+        cont.ReiniciarVelocidad();
+        cont.enabled = false;
 
-        CanvMuerte.gameObject.SetActive(false); //Apago el canvas
+        pato.transform.position = Spawn.transform.position;
+        cont.saltoActual = 0;
+
+        mapin.ReiniciarMapa();
+
+        CanvMuerte.gameObject.SetActive(false);
 
         CanvIn.gameObject.SetActive(true);
         textoMonedas.text = dm.monedas.ToString();
         textoDistancia.text = dm.distancia.ToString("F1") + " m";
 
-        //Actualizo el record distancia
-        if(dm.distancia > dm.recordDistancia)
+        if (dm.distancia > dm.recordDistancia)
         {
             dm.recordDistancia = dm.distancia;
             textoRecordDistancia.text = dm.recordDistancia.ToString("F1");
         }
 
-        //DM.SetActive(false);
         CanvasMuerteRecord.SetActive(false);
         canvasMuerteNormal.SetActive(false);
         BarraLateral.SetActive(true);
         DMObjeto.SetActive(false);
 
-        //Efectos pato
+        // Efectos pato
         Splash.SetActive(false);
         Animator animatorSplash = Splash.GetComponent<Animator>();
         animatorSplash.SetBool("Death", false);
-
-        //enviar.SubmitScore(dm.distancia);
-        //rankingUI.UpdateRanking();
     }
 
     //Funcion que permite revivir tras el ultimo checkpoint si tienes 10 monedas
@@ -150,7 +151,7 @@ public class CanvasMuerte : MonoBehaviour
 
         //Reseteos de la distancia y de los saltos
         cont.saltoActual = 0;
-        control.entradaBloqueada = false;
+        control.entradaBloqueada = true;
 
         //Ocultar canvas muerte
         CanvMuerte.gameObject.SetActive(false);
@@ -171,7 +172,14 @@ public class CanvasMuerte : MonoBehaviour
 
     public IEnumerator CountDown(ControladorPato cont)
     {
+        // Bloquear al pato durante toda la cuenta atrás
+        cont.BloquearEntrada();
         cont.enabled = false;
+
+        // Eliminar cualquier movimiento residual
+        Rigidbody rb = cont.GetComponent<Rigidbody>();
+        rb.linearVelocity = Vector3.zero;
+        rb.angularVelocity = Vector3.zero;
 
         tres.SetActive(true);
         yield return new WaitForSeconds(1f);
@@ -189,9 +197,14 @@ public class CanvasMuerte : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         start.SetActive(false);
+
+        // Reactivar el controlador
         cont.enabled = true;
-        cont.entradaBloqueada = false;
+
+        // Esperar un frame antes de aceptar entradas
         yield return null;
+
+        cont.entradaBloqueada = false;
     }
 
     public void monedas()

@@ -1,6 +1,6 @@
-
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class ControladorPato : MonoBehaviour
 {
@@ -91,10 +91,21 @@ public class ControladorPato : MonoBehaviour
             }
 
             // Salto táctil
-            if (Input.touchCount > 0 &&
-                Input.GetTouch(0).phase == TouchPhase.Began)
+            if (Input.touchCount > 0)
             {
-                Salto();
+                Touch toque = Input.GetTouch(0);
+
+                if (toque.phase == TouchPhase.Began)
+                {
+                    // Comprobar si el toque está sobre un elemento de la interfaz
+                    bool tocaUI = EventSystem.current != null &&
+                                  EventSystem.current.IsPointerOverGameObject(toque.fingerId);
+
+                    if (!tocaUI)
+                    {
+                        Salto();
+                    }
+                }
             }
         }
 
