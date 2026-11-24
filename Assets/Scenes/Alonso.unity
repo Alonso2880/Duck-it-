@@ -19268,8 +19268,8 @@ MonoBehaviour:
   mapaFase2: {fileID: 8372761318568074985, guid: 822e3e5243ab3944684cbfca2843ccf4, type: 3}
   mapaFase3: {fileID: 4813524197058901958, guid: 9d2926dec36d1964db2fe478997ceaff, type: 3}
   dist: {fileID: 1712035291}
-  DistanciaFase2: 50
-  DistnaciaFase3: 3000
+  DistanciaFase2: 300
+  DistnaciaFase3: 700
   segmentLength: 317.93
   objetosIniciales: []
 --- !u!1 &1445123579
