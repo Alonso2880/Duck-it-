@@ -142,7 +142,7 @@ public class MissionUI : MonoBehaviour
         }
 
         if (countdownText != null)
-            countdownText.gameObject.SetActive(progress.completed);
+            countdownText.gameObject.SetActive(progress.claimed);
 
         RefreshCountdown();
     }
@@ -167,7 +167,7 @@ public class MissionUI : MonoBehaviour
         {
             TimeSpan time = TimeSpan.FromSeconds(remaining);
 
-            countdownText.text = time.ToString(@"hh\:mm\:ss");
+            countdownText.text = time.ToString(@"mm\:ss");
         }
         else if (!progress.claimed)
         {
@@ -193,5 +193,7 @@ public class MissionUI : MonoBehaviour
             return;
 
         missionManager.ClaimMission(currentMissionID);
+
+        RefreshUI();
     }
 }
