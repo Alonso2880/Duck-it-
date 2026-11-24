@@ -211,10 +211,10 @@ public class CanvasMuerte : MonoBehaviour
     {
         DistanciaMonedas dm = DM.GetComponent<DistanciaMonedas>();
         Debug.Log("Hola");
-        if (dm.monedas >= 0)
+        if (dm.monedas >= 10)
         {
             Debug.Log("Revivir activado");
-            dm.monedas -= 0;
+            dm.monedas -= 10;
             dm.ActualizarMonedas();
             Revivir();
         }

@@ -1,4 +1,5 @@
 
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -89,8 +90,7 @@ public class MapaInfinito : MonoBehaviour
             // Nunca destruimos el mapa inicial.
             if (currentSegment != mapaInicial)
             {
-                tramosGenerados.Remove(currentSegment);
-                Destroy(currentSegment);
+                StartCoroutine(EliminarTramo(currentSegment));
             }
 
             currentSegment = nextSegment;
@@ -215,6 +215,17 @@ public class MapaInfinito : MonoBehaviour
         nextIsB = true;
 
         CrearSiguienteTramo();
+    }
+
+    IEnumerator EliminarTramo(GameObject tramo)
+    {
+        yield return new WaitForSeconds(5f);
+
+        if (tramo != null)
+        {
+            tramosGenerados.Remove(tramo);
+            Destroy(tramo);
+        }
     }
 
 }
