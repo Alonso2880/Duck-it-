@@ -128,15 +128,50 @@ public class MapaInfinito : MonoBehaviour
                 break;
         }
 
-        Vector3 posicion =
-            currentSegment.transform.position
-            + Vector3.right * segmentLength;
+        if (prefab == null)
+        {
+            Debug.LogError("No se ha encontrado el prefab del mapa.");
+            return;
+        }
 
-        nextSegment = Instantiate(
-            prefab,
-            posicion,
-            currentSegment.transform.rotation
-        );
+        // Obtener el punto final del segmento actual
+        Transform puntoFinalActual =
+            currentSegment.transform.Find("PuntoFinal");
+
+        if (puntoFinalActual == null)
+        {
+            Debug.LogError("Falta PuntoFinal en " + currentSegment.name);
+            return;
+        }
+
+        // Instanciar el siguiente segmento
+        nextSegment = Instantiate(prefab, Vector3.zero, Quaternion.identity);
+
+        // Obtener el punto de inicio del nuevo segmento
+        Transform puntoInicioNuevo =
+            nextSegment.transform.Find("PuntoInicio");
+
+        if (puntoInicioNuevo == null)
+        {
+            Debug.LogError("Falta PuntoInicio en " + prefab.name);
+            Destroy(nextSegment);
+            nextSegment = null;
+            return;
+        }
+
+        // Ajustar rotación para alinear los puntos de unión
+        Quaternion nuevaRotacion =
+            puntoFinalActual.rotation *
+            Quaternion.Inverse(puntoInicioNuevo.localRotation);
+
+        nextSegment.transform.rotation = nuevaRotacion;
+
+        // Ajustar posición para hacer coincidir ambos puntos
+        Vector3 nuevaPosicion =
+            puntoFinalActual.position -
+            nuevaRotacion * puntoInicioNuevo.localPosition;
+
+        nextSegment.transform.position = nuevaPosicion;
 
         tramosGenerados.Add(nextSegment);
     }

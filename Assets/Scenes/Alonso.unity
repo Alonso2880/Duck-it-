@@ -1956,6 +1956,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 19.63
       objectReference: {fileID: 0}
+    - target: {fileID: 8338317902329989723, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 308.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8582364997720041270, guid: 2f97b160dbd6c8946a633a0676ca380c, type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -19264,7 +19268,7 @@ MonoBehaviour:
   mapaFase2: {fileID: 8372761318568074985, guid: 822e3e5243ab3944684cbfca2843ccf4, type: 3}
   mapaFase3: {fileID: 4813524197058901958, guid: 9d2926dec36d1964db2fe478997ceaff, type: 3}
   dist: {fileID: 1712035291}
-  DistanciaFase2: 600
+  DistanciaFase2: 50
   DistnaciaFase3: 900
   segmentLength: 317.93
   objetosIniciales: []
