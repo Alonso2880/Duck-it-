@@ -14681,6 +14681,81 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1072841700}
   m_CullTransparentMesh: 1
+--- !u!1 &1076032763
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1076032764}
+  - component: {fileID: 1076032766}
+  - component: {fileID: 1076032765}
+  m_Layer: 5
+  m_Name: Countdown
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1076032764
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076032763}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.79, y: 1.79, z: 1.79}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 1569531331}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 35}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1076032765
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076032763}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: ccb9c53b49d80524dbadaa9ae69945f1, type: 3}
+  m_Type: 3
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 2
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1076032766
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1076032763}
+  m_CullTransparentMesh: 1
 --- !u!1 &1089982821
 GameObject:
   m_ObjectHideFlags: 0
@@ -17563,6 +17638,7 @@ MonoBehaviour:
   DMObjeto: {fileID: 1909105621}
   mapin: {fileID: 1445098435}
   pato: {fileID: 12347340}
+  transicionPaneles: {fileID: 1294607869}
   control: {fileID: 12347344}
   check: {fileID: 474363549}
   CanvIn: {fileID: 482951139}
@@ -17573,6 +17649,7 @@ MonoBehaviour:
   canvasMuerteNormal: {fileID: 1004073119}
   CanvasMuerteRecord: {fileID: 854487713}
   BarraLateral: {fileID: 652268352}
+  circuloCountdown: {fileID: 1076032765}
   uno: {fileID: 2029384065}
   dos: {fileID: 184410655}
   tres: {fileID: 1822457433}
@@ -17644,6 +17721,7 @@ MonoBehaviour:
   duracionPopup: 0.2
   escalaInicialPopup: 0.75
   animacionPopup: 27
+  audioClick: {fileID: 23705265}
 --- !u!1 &1316237602
 GameObject:
   m_ObjectHideFlags: 0
@@ -20823,6 +20901,7 @@ RectTransform:
   m_Children:
   - {fileID: 1203990208}
   - {fileID: 1559718384}
+  - {fileID: 1076032764}
   m_Father: {fileID: 151578671}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}

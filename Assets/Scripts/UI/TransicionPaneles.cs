@@ -72,6 +72,9 @@ public class TransicionPaneles : MonoBehaviour
     [SerializeField]
     private LeanTweenType animacionPopup = LeanTweenType.easeOutBack;
 
+    [Header("Audio")]
+    public AudioSource audioClick;
+
     // =========================================================
     // INICIALIZACIÓN
     // =========================================================
@@ -200,37 +203,44 @@ public class TransicionPaneles : MonoBehaviour
 
     public void AbrirSkins()
     {
+        audioClick.Play();
         CambiarPanel(0);
     }
 
     public void AbrirMisiones()
     {
+        audioClick.Play();
         CambiarPanel(1);
     }
 
     public void AbrirMenuPrincipal()
     {
+        audioClick.Play();
         CambiarPanel(2);
     }
 
     public void AbrirAddFriends()
     {
+        audioClick.Play();
         CambiarPanel(3);
     }
 
     public void AbrirShop()
     {
+        audioClick.Play();
         CambiarPanel(4);
     }
 
     // Alias por compatibilidad con el botón anterior.
     public void VolverPrincipal()
     {
+        audioClick.Play();
         AbrirMenuPrincipal();
     }
 
     public void AbrirCompras()
     {
+        audioClick.Play();
         AbrirShop();
     }
 
@@ -441,6 +451,7 @@ public class TransicionPaneles : MonoBehaviour
 
     public void AbrirRankingGameover()
     {
+        audioClick.Play();
         MostrarPopup(popupRankingGameover, grupoPopupRankingGameover);
     }
 
@@ -482,17 +493,20 @@ public class TransicionPaneles : MonoBehaviour
 
     public void AbrirPerfil()
     {
+        audioClick.Play();
         MostrarPopup(popupPerfil, grupoPopupPerfil);
     }
 
     public void AbrirRanking()
     {
+        audioClick.Play();
         MostrarPopup(popupRanking, grupoPopupRanking);
         rankingUI.UpdateRanking();
     }
 
     public void AbrirAjustes()
     {
+        audioClick.Play();
         MostrarPopup(popupAjustes, grupoPopupAjustes);
     }
 
@@ -502,6 +516,7 @@ public class TransicionPaneles : MonoBehaviour
 
     public void CerrarRankingGameover()
     {
+        audioClick.Play();
         OcultarPopup(popupRankingGameover, grupoPopupRankingGameover);
     }
     private void OcultarPopup(GameObject popup, CanvasGroup grupo)
@@ -546,16 +561,19 @@ public class TransicionPaneles : MonoBehaviour
 
     public void CerrarPerfil()
     {
+        audioClick.Play();
         OcultarPopup(popupPerfil, grupoPopupPerfil);
     }
 
     public void CerrarRanking()
     {
+        audioClick.Play();
         OcultarPopup(popupRanking, grupoPopupRanking);
     }
 
     public void CerrarAjustes()
     {
+        audioClick.Play();
         OcultarPopup(popupAjustes, grupoPopupAjustes);
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CanvasMuerte : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class CanvasMuerte : MonoBehaviour
     public GameObject DMObjeto;
     public MapaInfinito mapin;
     public GameObject pato;
+    public TransicionPaneles transicionPaneles;
 
     public ControladorPato control;
 
@@ -31,6 +33,9 @@ public class CanvasMuerte : MonoBehaviour
     public GameObject CanvasMuerteRecord;
 
     public GameObject BarraLateral;
+
+    [Header("Temporizador anuncio")]
+    public Image circuloCountdown;
 
     [Header("CountDown")]
     public GameObject uno;
@@ -71,6 +76,7 @@ public class CanvasMuerte : MonoBehaviour
 
         control.entradaBloqueada = false;
         detectar.ResetearDistancia();
+        transicionPaneles.CerrarRankingGameover();
         CanvMuerte.gameObject.SetActive(false); //Apago el canvas
         CanvasMuerteRecord.SetActive(false);
         canvasMuerteNormal.SetActive(false);
@@ -113,6 +119,7 @@ public class CanvasMuerte : MonoBehaviour
             textoRecordDistancia.text = dm.recordDistancia.ToString("F1");
         }
 
+        transicionPaneles.CerrarRankingGameover();
         CanvasMuerteRecord.SetActive(false);
         canvasMuerteNormal.SetActive(false);
         BarraLateral.SetActive(true);
@@ -154,6 +161,7 @@ public class CanvasMuerte : MonoBehaviour
         control.entradaBloqueada = true;
 
         //Ocultar canvas muerte
+        transicionPaneles.CerrarRankingGameover();
         CanvMuerte.gameObject.SetActive(false);
         canvasMuerteAnuncio.SetActive(false);
         canvasMuerteAnuncioPrimero.SetActive(true);
@@ -243,12 +251,31 @@ public class CanvasMuerte : MonoBehaviour
 
     public IEnumerator CountdownAnuncio()
     {
-        yield return new WaitForSecondsRealtime(10f);
+        float duracion = 10f;
+        float tiempoTranscurrido = 0f;
+
+        // El círculo empieza lleno
+        circuloCountdown.fillAmount = 1f;
+
+        while (tiempoTranscurrido < duracion)
+        {
+            tiempoTranscurrido += Time.unscaledDeltaTime;
+
+            // Reducimos progresivamente el círculo
+            circuloCountdown.fillAmount =
+                1f - (tiempoTranscurrido / duracion);
+
+            yield return null;
+        }
+
+        circuloCountdown.fillAmount = 0f;
+
         Debug.Log("Empezado");
-        
+
         canvasMuerteAnuncio.SetActive(false);
         canvasMuerteAnuncioPrimero.SetActive(true);
         CanvMuerte.SetActive(true);
-        
+
+        countdown = null;
     }
 }
