@@ -410,8 +410,8 @@ PlayerSettings:
   - m_BuildTarget: Android
     m_Icons:
     - m_Textures:
-      - {fileID: 2800000, guid: d2043f37bbb0cec4aae014a03a046f66, type: 3}
-      - {fileID: 2800000, guid: d2043f37bbb0cec4aae014a03a046f66, type: 3}
+      - {fileID: 2800000, guid: 4c274aeaa3f41b446a394baf7b98e284, type: 3}
+      - {fileID: 2800000, guid: 4c274aeaa3f41b446a394baf7b98e284, type: 3}
       m_Width: 432
       m_Height: 432
       m_Kind: 2
