@@ -204,30 +204,45 @@ public class TransicionPaneles : MonoBehaviour
     public void AbrirSkins()
     {
         audioClick.Play();
+        CerrarAjustes();
+        CerrarRanking();
+        CerrarPerfil();
         CambiarPanel(0);
     }
 
     public void AbrirMisiones()
     {
         audioClick.Play();
+        CerrarAjustes();
+        CerrarRanking();
+        CerrarPerfil();
         CambiarPanel(1);
     }
 
     public void AbrirMenuPrincipal()
     {
         audioClick.Play();
+        CerrarAjustes();
+        CerrarRanking();
+        CerrarPerfil();
         CambiarPanel(2);
     }
 
     public void AbrirAddFriends()
     {
         audioClick.Play();
+        CerrarAjustes();
+        CerrarRanking();
+        CerrarPerfil();
         CambiarPanel(3);
     }
 
     public void AbrirShop()
     {
         audioClick.Play();
+        CerrarAjustes();
+        CerrarRanking();
+        CerrarPerfil();
         CambiarPanel(4);
     }
 
@@ -235,12 +250,18 @@ public class TransicionPaneles : MonoBehaviour
     public void VolverPrincipal()
     {
         audioClick.Play();
+        CerrarAjustes();
+        CerrarRanking();
+        CerrarPerfil();
         AbrirMenuPrincipal();
     }
 
     public void AbrirCompras()
     {
         audioClick.Play();
+        CerrarAjustes();
+        CerrarRanking();
+        CerrarPerfil();
         AbrirShop();
     }
 
